@@ -1,13 +1,16 @@
 import LoginDialog from "./LoginDialog";
 import Image from "next/image";
 import { Quicksand } from "next/font/google";
+import { auth } from "@/auth";
+import Logout from "../atoms/Logout";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-export default function Header() {
+export default async function Header() {
+  const session = await auth();
 
   return (
     <div className="bg-black">
@@ -21,8 +24,12 @@ export default function Header() {
           </h1>
         </div>
         <div className="flex items-center gap-4">
-          <LoginDialog />
           <div className="text-white font-bold">カート</div>
+          {session ? (
+            <Logout />
+          ) : (
+            <LoginDialog />
+          )}
         </div>
       </div>
     </div>
