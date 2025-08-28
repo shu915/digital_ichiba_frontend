@@ -4,10 +4,16 @@ import { getUserFromCookies } from "@/lib/getUserFromCookies";
 import { requireAuth } from "@/lib/requireAuth";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
   const session = await requireAuth();
   const user = await getUserFromCookies();
+  if (!user) {
+    const cookieStore = await cookies();
+    if (!cookieStore.get("di_user")) redirect("/auth/signout");
+  }
 
   return (
     <div>

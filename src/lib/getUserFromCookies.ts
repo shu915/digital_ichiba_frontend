@@ -3,6 +3,6 @@ import { cookies } from "next/headers";
 export const getUserFromCookies = async () => {
   const cookieStore = await cookies();
   const raw = cookieStore.get("di_user")?.value;
-  const user = raw ? JSON.parse(decodeURIComponent(raw)) : null;
-  return user;
+  if (!raw) return null;
+  return JSON.parse(decodeURIComponent(raw));
 };

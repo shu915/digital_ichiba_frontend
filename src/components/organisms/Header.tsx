@@ -1,8 +1,9 @@
-import LoginDialog from "./LoginDialog";
+
 import Image from "next/image";
 import { Quicksand } from "next/font/google";
 import { auth } from "@/auth";
 import Logout from "../atoms/Logout";
+import LoginDialog from "./LoginDialog";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -23,7 +24,7 @@ export default async function Header() {
             Digital Ichiba
           </h1>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4">{}
           {session && (
             <a href="/dashboard" className="text-white font-bold">
               ダッシュボード

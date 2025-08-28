@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getToken } from "next-auth/jwt";
 import { mintUserJWT } from "@/lib/jwt";
+import { redirect } from "next/navigation";
 
 export async function GET(request: Request) {
   const session = await auth();
