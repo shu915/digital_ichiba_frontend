@@ -10,7 +10,7 @@ export default async function ShopDashboard() {
   await requireAuth();
   
   const user = await getUserFromCookies();
-  if (user?.role === "customer") {
+  if (!["shop", "admin"].includes(user?.role ?? "")) {
     redirect("/dashboard");
   }
   
