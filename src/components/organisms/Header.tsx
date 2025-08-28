@@ -24,7 +24,7 @@ export default async function Header() {
             Digital Ichiba
           </h1>
         </div>
-        <div className="flex items-center gap-4">{}
+        <div className="flex items-center gap-4">
           {session && (
             <a href="/dashboard" className="text-white font-bold">
               ダッシュボード
