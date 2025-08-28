@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
   const res = NextResponse.redirect(new URL("/", request.url));
   res.cookies.set("di_user", body, {
-    httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 60 * 60,
+    httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 60 * 60 * 5,
   });
   return res;
 }
