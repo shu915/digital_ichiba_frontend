@@ -14,6 +14,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.provider_subject = profile?.sub;
       }
       return token;
-    }
+    },
   }
 });

@@ -1,6 +1,10 @@
-import Image from "next/image";
+import { getUserFromCookies } from "@/lib/getUserFromCookies";
+import { auth } from "@/auth";
 
-export default function Footer() {
+export default async function Footer() {
+  const user = await getUserFromCookies();
+  const session = await auth();
+  
   return (
     <div className="bg-black py-6">
       <div className="w-7xl mx-auto max-w-full flex justify-between items-top p-4 text-white font-bold">
@@ -22,9 +26,7 @@ export default function Footer() {
           </li>
         </ul>
         <div>
-          <a href="#">
-            ショップを開設
-          </a>
+          ダミー
         </div>
       </div>
       <small className="text-center text-white block">

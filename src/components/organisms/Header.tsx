@@ -24,12 +24,13 @@ export default async function Header() {
           </h1>
         </div>
         <div className="flex items-center gap-4">
-          <div className="text-white font-bold">カート</div>
-          {session ? (
-            <Logout />
-          ) : (
-            <LoginDialog />
+          {session && (
+            <a href="/dashboard" className="text-white font-bold">
+              ダッシュボード
+            </a>
           )}
+          <div className="text-white font-bold">カート</div>
+          {session ? <Logout /> : <LoginDialog />}
         </div>
       </div>
     </div>
