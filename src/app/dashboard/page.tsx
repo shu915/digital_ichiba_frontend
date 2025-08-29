@@ -1,5 +1,3 @@
-import Header from "@/components/organisms/Header";
-import Footer from "@/components/organisms/Footer";
 import { getUserFromCookies } from "@/lib/getUserFromCookies";
 import { requireAuth } from "@/lib/requireAuth";
 import { Button } from "@/components/ui/button";
@@ -7,11 +5,9 @@ import Link from "next/link";
 
 export default async function Dashboard() {
   const session = await requireAuth();
-  const user = await getUserFromCookies();
-
+  const data = await getUserFromCookies();
+  const user = data?.user;
   return (
-    <div>
-      <Header />
       <main className="py-8 w-7xl mx-auto max-w-full px-4">
           <h2 className="text-4xl font-bold text-center">ダッシュボード</h2>
         <div className="flex justify-end mt-4">
@@ -30,7 +26,5 @@ export default async function Dashboard() {
         <p>{user?.email}</p>
         <p>{user?.role}</p>
       </main>
-      <Footer />
-    </div>
   );
 }

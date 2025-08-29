@@ -1,13 +1,19 @@
 import { NextResponse } from "next/server";
-import { mintIdentityFromRequest } from "@/lib/mintIdentityFromRequest";
+import { createBackendJWT } from "@/lib/createBackendJWT";
+import { getToken } from "next-auth/jwt";
 
 export async function POST(request: Request) {
-  const identity = await mintIdentityFromRequest(request);
-  if (!identity) return NextResponse.redirect(new URL("/login", request.url));
+  const token = await getToken({ req: request });
+
+  const backendJWT = await createBackendJWT({
+    email: token!.email!,
+    provider: token!.provider as "email" | "google",
+    provider_subject: token!.provider_subject as string,
+  });
 
   const r = await fetch(`${process.env.RAILS_URL}/api/shops`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${identity}` },
+    headers: { Authorization: `Bearer ${backendJWT}` },
     cache: "no-store",
   });
   const body = await r.text();

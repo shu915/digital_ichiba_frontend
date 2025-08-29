@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getToken } from "next-auth/jwt";
-import { mintUserJWT } from "@/lib/jwt";
+import { createBackendJWT } from "@/lib/createBackendJWT";
 import { signOut } from "@/auth";
 
 export async function GET(request: Request) {
@@ -14,11 +14,11 @@ export async function GET(request: Request) {
   const subject =
     typeof jwt?.provider_subject === "string" ? jwt.provider_subject : email;
 
-  const identity = await mintUserJWT({ email, provider, provider_subject: subject });
+  const backendJWT = await createBackendJWT({ email, provider, provider_subject: subject });
 
   const r = await fetch(`${process.env.RAILS_URL}/api/login`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${identity}` },
+    headers: { Authorization: `Bearer ${backendJWT}` },
     cache: "no-store",
   });
   if (!r.ok) {
@@ -26,10 +26,9 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL("/auth/signout", request.url));
   }
   const body = await r.text();
-  const encoded = encodeURIComponent(body);
 
   const res = NextResponse.redirect(new URL("/", request.url));
-  res.cookies.set("di_user", encoded, {
+  res.cookies.set("di_user", body, {
     httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 5,
   });
   return res;

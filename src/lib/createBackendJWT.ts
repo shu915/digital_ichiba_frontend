@@ -3,12 +3,12 @@ import { SignJWT, importPKCS8 } from "jose";
 const PRIVATE_KEY_PEM = process.env.APP_JWT_PRIVATE_KEY!.replace(/\\n/g, "\n");
 
 type MintPayload = {
-  email: string;                 // アプリ内の主IDとして使う
-  provider?: "google" | "email"; // 任意
-  provider_subject?: string;     // Googleのsubなど（任意）
+  email: string;
+  provider?: "google" | "email";
+  provider_subject?: string;
 };
 
-export async function mintUserJWT({ email, provider, provider_subject }: MintPayload) {
+export async function createBackendJWT({ email, provider, provider_subject }: MintPayload) {
   const key = await importPKCS8(PRIVATE_KEY_PEM, "RS256");
   const now = Math.floor(Date.now() / 1000);
 
