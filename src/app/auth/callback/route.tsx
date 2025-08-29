@@ -30,7 +30,7 @@ export async function GET(request: Request) {
 
   const res = NextResponse.redirect(new URL("/", request.url));
   res.cookies.set("di_user", encoded, {
-    httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 60 * 60 * 5,
+    httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 5,
   });
   return res;
 }

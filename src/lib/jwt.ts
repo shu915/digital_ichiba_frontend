@@ -22,6 +22,6 @@ export async function mintUserJWT({ email, provider, provider_subject }: MintPay
     .setAudience("digital-ichiba-rails")
     .setSubject(provider_subject ?? email)           // ← sub は「このユーザー」を一意に指す値に統一
     .setIssuedAt(now)
-    .setExpirationTime(now + 60 * 5)
+    .setExpirationTime(now + 60 * 60 * 24 * 30)
     .sign(key);
 }
