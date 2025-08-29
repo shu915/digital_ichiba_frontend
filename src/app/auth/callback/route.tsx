@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { getToken } from "next-auth/jwt";
 import { mintUserJWT } from "@/lib/jwt";
+import { signOut } from "@/auth";
 
 export async function GET(request: Request) {
   const session = await auth();
@@ -20,11 +21,16 @@ export async function GET(request: Request) {
     headers: { Authorization: `Bearer ${identity}` },
     cache: "no-store",
   });
+  if (!r.ok) {
+    await signOut();
+    return NextResponse.redirect(new URL("/auth/signout", request.url));
+  }
   const body = await r.text();
+  const encoded = encodeURIComponent(body);
 
   const res = NextResponse.redirect(new URL("/", request.url));
-  res.cookies.set("di_user", body, {
-    httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 60 * 60,
+  res.cookies.set("di_user", encoded, {
+    httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 5,
   });
   return res;
 }
