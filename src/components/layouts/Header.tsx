@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Quicksand } from "next/font/google";
 import { auth } from "@/auth";
 import Logout from "../atoms/Logout";
@@ -32,9 +33,9 @@ export default async function Header() {
         </div>
         <div className="flex items-center gap-4">
           {session && (
-            <a href="/dashboard" className="text-white font-bold">
+            <Link href="/dashboard" className="text-white font-bold">
               ダッシュボード
-            </a>
+            </Link>
           )}
           <div className="text-white font-bold">カート</div>
           {session ? <Logout /> : <LoginDialog />}

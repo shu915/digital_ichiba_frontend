@@ -8,7 +8,7 @@ type MintPayload = {
   provider_subject?: string;
 };
 
-export async function createBackendJWT({ email, provider, provider_subject }: MintPayload) {
+export default async function createBackendJWT({ email, provider, provider_subject }: MintPayload) {
   const key = await importPKCS8(PRIVATE_KEY_PEM, "RS256");
   const now = Math.floor(Date.now() / 1000);
 

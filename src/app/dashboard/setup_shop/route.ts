@@ -1,15 +1,9 @@
 import { NextResponse } from "next/server";
-import { createBackendJWT } from "@/lib/createBackendJWT";
-import { getToken } from "next-auth/jwt";
+import createBackendJWTFromRequest from "@/lib/createBackendJWTFromRequest";
 
 export async function POST(request: Request) {
-  const token = await getToken({ req: request });
 
-  const backendJWT = await createBackendJWT({
-    email: token!.email!,
-    provider: token!.provider as "email" | "google",
-    provider_subject: token!.provider_subject as string,
-  });
+  const backendJWT = await createBackendJWTFromRequest(request);
 
   const r = await fetch(`${process.env.RAILS_URL}/api/shops`, {
     method: "POST",
@@ -19,12 +13,12 @@ export async function POST(request: Request) {
   const body = await r.text();
   
   const res = NextResponse.redirect(new URL("/dashboard/shop", request.url), 303);
-  res.cookies.set("di_user", body, {
+  res.cookies.set("di_data", body, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 * 3,
   });
   return res;
 }

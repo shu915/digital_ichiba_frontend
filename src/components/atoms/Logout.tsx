@@ -7,7 +7,7 @@ export default function Logout() {
     <form
       action={async () => {
         "use server";
-        (await cookies()).delete("di_user");
+        (await cookies()).delete("di_data");
         await signOut({ redirectTo: "/" });
       }}
     >
