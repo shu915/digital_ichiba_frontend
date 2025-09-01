@@ -1,13 +1,13 @@
 import { requireAuth } from "@/lib/requireAuth";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
+import getDataFromCookies from "@/lib/getDataFromCookies";
 
 export default async function Dashboard() {
   const session = await requireAuth();
-  const data = await requireShopOrAdmin();
+  const data = await getDataFromCookies();
   const user = data.user;
-  
+
   return (
     <main className="py-8 w-7xl mx-auto max-w-full px-4">
       <h2 className="text-4xl font-bold text-center">ダッシュボード</h2>

@@ -92,7 +92,12 @@ export default function ProfileForm() {
             const f = e.target.files?.[0] ?? null;
             if (!f) { setShopIcon(null); setShopIconError(null); return; }
             const err = validateImageFile(f);
-            if (err) { setShopIconError(err); e.currentTarget.value = ""; return; }
+            if (err) {
+              setShopIconError(err);
+              setShopIcon(null);
+              e.currentTarget.value = "";
+              return;
+            }
             setShopIconError(null);
             setShopIcon(f);
           }}
@@ -112,7 +117,11 @@ export default function ProfileForm() {
             const f = e.target.files?.[0] ?? null;
             if (!f) { setShopHeader(null); setShopHeaderError(null); return; }
             const err = validateImageFile(f);
-            if (err) { setShopHeaderError(err); e.currentTarget.value = ""; return; }
+            if (err) {
+              setShopHeaderError(err);
+              setShopHeader(null);
+              e.currentTarget.value = ""; return;
+            }
             setShopHeaderError(null);
             setShopHeader(f);
           }}
