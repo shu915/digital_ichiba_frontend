@@ -6,7 +6,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 5,
+    maxAge: 60 * 60 * 24 * 3,
     updateAge: 0,
   },
   callbacks: {

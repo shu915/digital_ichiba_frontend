@@ -1,9 +1,4 @@
-import { getUserFromCookies } from "@/lib/getUserFromCookies";
-import { auth } from "@/auth";
-
 export default async function Footer() {
-  const user = await getUserFromCookies();
-  const session = await auth();
   
   return (
     <div className="bg-black py-6">

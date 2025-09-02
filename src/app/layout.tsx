@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./global.css";
+import Header from "@/components/layouts/Header";
+import Footer from "@/components/layouts/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +18,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Digital Ichiba",
   description: "Digital Ichiba",
+  icons: {
+    icon: "/images/favicon.png",
+  },
 };
+
 
 export default function RootLayout({
   children,
@@ -23,11 +30,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header />
         {children}
+        <Footer />
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );
