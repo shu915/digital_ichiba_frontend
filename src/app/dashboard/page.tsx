@@ -9,7 +9,7 @@ export default async function Dashboard() {
   const user = data.user;
 
   return (
-    <main className="py-8 w-7xl mx-auto max-w-full px-4">
+    <div className="py-8 w-7xl mx-auto max-w-full px-4">
       <h2 className="text-4xl font-bold text-center">ダッシュボード</h2>
       <div className="flex justify-end mt-4">
         {session && user?.role === "customer" && (
@@ -30,6 +30,6 @@ export default async function Dashboard() {
       <p>{user?.name}</p>
       <p>{user?.email}</p>
       <p>{user?.role}</p>
-    </main>
+    </div>
   );
 }

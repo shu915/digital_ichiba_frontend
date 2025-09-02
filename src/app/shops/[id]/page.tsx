@@ -1,7 +1,7 @@
 import Shop from "@/types/shop";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
+import ShopHeader from "@/components/atoms/ShopHeader";
 
 export default async function ShopPage({
   params,
@@ -19,17 +19,7 @@ export default async function ShopPage({
 
   return (
     <div>
-      {shop?.header_url && (
-        <div className="relative w-full h-50 sm:h-60">
-          <Image
-            src={shop.header_url}
-            alt={shop.name}
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-      )}
+      <ShopHeader shop={shop} />
     <div className="py-8 w-7xl mx-auto max-w-full">
       <h2 className="text-4xl font-bold text-center">{shop?.name}</h2>
       <div className="flex justify-end mt-4">

@@ -11,7 +11,6 @@ export default async function ShopProfileEdit() {
   await requireAuth();
   await requireShopOrAdmin();
   const loginData = await getDataFromCookies();
-  console.log(loginData);
 
   return (
     <div className="py-8 w-7xl mx-auto max-w-full px-4">
