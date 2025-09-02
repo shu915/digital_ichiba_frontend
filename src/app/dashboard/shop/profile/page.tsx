@@ -3,10 +3,12 @@ import Link from "next/link";
 import ShopProfileForm from "./ShopProfileForm";
 import { requireAuth } from "@/lib/requireAuth";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
+import getDataFromCookies from "@/lib/getDataFromCookies";
 
 export default async function ShopProfileEdit() {
   await requireAuth();
   await requireShopOrAdmin();
+  const data = await getDataFromCookies();
 
   return (
     <div>
@@ -19,7 +21,7 @@ export default async function ShopProfileEdit() {
             </Link>
           </Button>
         </div>
-        <ShopProfileForm />
+        <ShopProfileForm data={data} />
       </main>
     </div>
   );

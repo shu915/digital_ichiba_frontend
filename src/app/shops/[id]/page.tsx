@@ -1,33 +1,47 @@
-"use client";
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import Shop from "@/types/shop";
+import Image from "next/image";
 
-type Shop = {
-  id: string;
-  name: string;
-  description: string;
-  icon_url : string;
-  header_url: string;
-};
+export default async function ShopPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const res = await fetch(`${process.env.NEXT_URL}/api/shops/${id}`, {
+    method: "GET",
+    cache: "no-store",
+  });
+  console.log(res);
+  const data = await res.json();
+  const shop: Shop = data.shop;
 
-export default function ShopPage() {
-  const { id } = useParams<{ id: string }>();
-  const [shop, setShop] = useState<Shop | null>(null);
-  useEffect(() => {
-    fetch(`/shops/${id}/api`, {
-      method: "GET",
-      cache: "no-store",
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setShop(data.shop);
-      });
-  }, [id]);
-  return <div>
-    <h1>{shop?.name}</h1>
-    <p>{shop?.description}</p>
-    <img src={shop?.icon_url} alt={shop?.name} />
-    <img src={shop?.header_url} alt={shop?.name} />
-  </div>;
+  return (
+    <div>
+      {shop?.header_url && (
+        <div className="relative w-full h-64 sm:h-80">
+          <Image
+            src={shop.header_url}
+            alt={shop.name}
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+      )}
+      <div className="flex">
+        {shop?.icon_url && (
+          <Image
+            src={shop?.icon_url}
+            alt={shop?.name}
+            width={240}
+            height={240}
+          />
+        )}
+        <div>
+          <h1 className="text-2xl font-bold">{shop?.name}</h1>
+          <p>{shop?.description}</p>
+        </div>
+      </div>
+    </div>
+  );
 }

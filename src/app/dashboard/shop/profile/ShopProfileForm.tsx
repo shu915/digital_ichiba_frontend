@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import validateImageFile from "@/lib/validateImageFile";
 import { toast } from "sonner";
-
+import { LoginData } from "@/types/loginData";
 
 const schema = z.object({
   shop_name: z.string().min(1, "名前は必須です").max(40),
@@ -16,17 +16,25 @@ const schema = z.object({
 });
 type FormValues = z.infer<typeof schema>;
 
-export default function ProfileForm() {
+export default function ProfileForm({ data }: { data: LoginData }) {
+  const shop = data?.shop;
+
   const [shopIcon, setShopIcon] = useState<File | null>(null);
   const [shopHeader, setShopHeader] = useState<File | null>(null);
-  const [shopIconError, setShopIconError] = useState<string | null>(null);
+  const [shopIconError, setShopIconError] = useState<string | null>();
   const [shopHeaderError, setShopHeaderError] = useState<string | null>(null);
 
   const {
-    register,
     handleSubmit,
+    register,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      shop_name: shop?.name ?? "",
+      shop_description: shop?.description ?? "",
+    },
+  });
 
   const onSubmit = async (data: FormValues) => {
 
@@ -40,11 +48,12 @@ export default function ProfileForm() {
       formData.append("shop[header]", shopHeader);
     }
 
-    const res = await fetch(`/dashboard/shop/profile/api`, {
+    const res = await fetch("/api/dashboard/shop/profile", {
       method: "PATCH",
       body: formData,
       cache: "no-store",
     });
+    
     if (res.ok) {
       toast('ショッププロフィールを更新しました');
     }
