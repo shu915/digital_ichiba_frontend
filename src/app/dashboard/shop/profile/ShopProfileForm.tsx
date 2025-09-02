@@ -9,6 +9,7 @@ import { useState } from "react";
 import validateImageFile from "@/lib/validateImageFile";
 import { toast } from "sonner";
 import { LoginData } from "@/types/loginData";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   shop_name: z.string().min(1, "名前は必須です").max(40),
@@ -16,17 +17,19 @@ const schema = z.object({
 });
 type FormValues = z.infer<typeof schema>;
 
-export default function ProfileForm({ data }: { data: LoginData }) {
-  const shop = data?.shop;
+export default function ProfileForm({ loginData }: { loginData: LoginData }) {
+  const shop = loginData?.shop;
+  const router = useRouter();
 
   const [shopIcon, setShopIcon] = useState<File | null>(null);
   const [shopHeader, setShopHeader] = useState<File | null>(null);
-  const [shopIconError, setShopIconError] = useState<string | null>();
+  const [shopIconError, setShopIconError] = useState<string | null>(null);
   const [shopHeaderError, setShopHeaderError] = useState<string | null>(null);
 
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -37,7 +40,6 @@ export default function ProfileForm({ data }: { data: LoginData }) {
   });
 
   const onSubmit = async (data: FormValues) => {
-
     const formData = new FormData();
     formData.append("shop[name]", data.shop_name);
     formData.append("shop[description]", data.shop_description);
@@ -53,9 +55,18 @@ export default function ProfileForm({ data }: { data: LoginData }) {
       body: formData,
       cache: "no-store",
     });
-    
+
     if (res.ok) {
+      const updated = await res.json();
+      reset({
+        shop_name: updated.shop.name ?? "",
+        shop_description: updated.shop.description ?? "",
+      });
+      router.refresh();
       toast('ショッププロフィールを更新しました');
+    }
+    else {
+      toast('ショッププロフィールを更新できませんでした');
     }
   };
 
@@ -68,18 +79,20 @@ export default function ProfileForm({ data }: { data: LoginData }) {
         <label htmlFor="name" className="font-bold">
           名前(必須)
         </label>
-        {errors.shop_name && <p className="text-red-500 text-sm">{errors.shop_name.message}</p>}
-        <Input
-          {...register("shop_name")}
-          placeholder="お店の名前"
-          id="name"
-        />
+        {errors.shop_name && (
+          <p className="text-red-500 text-sm">{errors.shop_name.message}</p>
+        )}
+        <Input {...register("shop_name")} placeholder="お店の名前" id="name" />
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="description" className="font-bold">
+        <label htmlFor="shop_description" className="font-bold">
           説明
         </label>
-        {errors.shop_description && <p className="text-red-500 text-sm">{errors.shop_description.message}</p>}
+        {errors.shop_description && (
+          <p className="text-red-500 text-sm">
+            {errors.shop_description.message}
+          </p>
+        )}
         <Textarea
           {...register("shop_description")}
           placeholder="2000文字以内で入力してください"
@@ -92,14 +105,20 @@ export default function ProfileForm({ data }: { data: LoginData }) {
         <label htmlFor="shop_icon" className="font-bold">
           アイコン
         </label>
-        {shopIconError && <p className="text-red-500 text-sm">{shopIconError}</p>}
+        {shopIconError && (
+          <p className="text-red-500 text-sm">{shopIconError}</p>
+        )}
         <Input
           type="file"
           placeholder="アイコン"
           id="shop_icon"
           onChange={(e) => {
             const f = e.target.files?.[0] ?? null;
-            if (!f) { setShopIcon(null); setShopIconError(null); return; }
+            if (!f) {
+              setShopIcon(null);
+              setShopIconError(null);
+              return;
+            }
             const err = validateImageFile(f);
             if (err) {
               setShopIconError(err);
@@ -117,19 +136,26 @@ export default function ProfileForm({ data }: { data: LoginData }) {
         <label htmlFor="shop_header" className="font-bold">
           ヘッダー
         </label>
-        {shopHeaderError && <p className="text-red-500 text-sm">{shopHeaderError}</p>}
+        {shopHeaderError && (
+          <p className="text-red-500 text-sm">{shopHeaderError}</p>
+        )}
         <Input
           type="file"
           placeholder="ヘッダー"
           id="shop_header"
           onChange={(e) => {
             const f = e.target.files?.[0] ?? null;
-            if (!f) { setShopHeader(null); setShopHeaderError(null); return; }
+            if (!f) {
+              setShopHeader(null);
+              setShopHeaderError(null);
+              return;
+            }
             const err = validateImageFile(f);
             if (err) {
               setShopHeaderError(err);
               setShopHeader(null);
-              e.currentTarget.value = ""; return;
+              e.currentTarget.value = "";
+              return;
             }
             setShopHeaderError(null);
             setShopHeader(f);

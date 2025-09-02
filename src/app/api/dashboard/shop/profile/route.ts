@@ -4,7 +4,7 @@ import createBackendJWTFromRequest from "@/lib/createBackendJWTFromRequest";
 export async function PATCH(request: Request) {
 
   const jwt = await createBackendJWTFromRequest(request);
-
+  
   const formData = await request.formData();
   const r = await fetch(`${process.env.RAILS_URL}/api/shop`, {
     method: "PATCH",
@@ -29,5 +29,6 @@ export async function PATCH(request: Request) {
     path: "/",
     maxAge: 60 * 60 * 24 * 30,
   });
+
   return res;
 }

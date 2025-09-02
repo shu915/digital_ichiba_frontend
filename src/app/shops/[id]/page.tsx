@@ -1,4 +1,6 @@
 import Shop from "@/types/shop";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import Image from "next/image";
 
 export default async function ShopPage({
@@ -18,7 +20,7 @@ export default async function ShopPage({
   return (
     <div>
       {shop?.header_url && (
-        <div className="relative w-full h-64 sm:h-80">
+        <div className="relative w-full h-50 sm:h-60">
           <Image
             src={shop.header_url}
             alt={shop.name}
@@ -28,20 +30,17 @@ export default async function ShopPage({
           />
         </div>
       )}
-      <div className="flex">
-        {shop?.icon_url && (
-          <Image
-            src={shop?.icon_url}
-            alt={shop?.name}
-            width={240}
-            height={240}
-          />
-        )}
-        <div>
-          <h1 className="text-2xl font-bold">{shop?.name}</h1>
-          <p>{shop?.description}</p>
-        </div>
+    <div className="py-8 w-7xl mx-auto max-w-full">
+      <h2 className="text-4xl font-bold text-center">{shop?.name}</h2>
+      <div className="flex justify-end mt-4">
+        <Button asChild>
+          <Link href={`/shops/${id}/profile`}>
+            <span className="font-bold">プロフィールを見る</span>
+          </Link>
+        </Button>
       </div>
+      <div>商品を並べる枠</div>
+    </div>
     </div>
   );
 }
