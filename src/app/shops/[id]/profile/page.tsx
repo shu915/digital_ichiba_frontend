@@ -14,14 +14,13 @@ export default async function ShopPage({
     method: "GET",
     cache: "no-store",
   });
-  console.log(res);
   const data = await res.json();
   const shop: Shop = data.shop;
 
   return (
     <div>
       <ShopHeader shop={shop} />
-      <div className="flex justify-center py-8 gap-4 flex-col w-[1000px] mx-auto max-w-full">
+      <div className="inner flex justify-center py-8 gap-4 flex-col">
         <h2 className="text-4xl font-bold text-center">{shop?.name}</h2>
         <div className="flex justify-end mt-4">
           <Button asChild>
@@ -41,8 +40,8 @@ export default async function ShopPage({
             />
           )}
         </div>
-        <div className="w-[1000px] mx-auto max-w-full py-8 text-center">
-          <p className="pt-2 whitespace-pre-wrap">{shop?.description}</p>
+        <div className="w-[720px] mx-auto py-8">
+          <p className="whitespace-pre-wrap">{shop?.description}</p>
         </div>
       </div>
     </div>

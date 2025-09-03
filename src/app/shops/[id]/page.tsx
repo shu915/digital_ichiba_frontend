@@ -13,14 +13,13 @@ export default async function ShopPage({
     method: "GET",
     cache: "no-store",
   });
-  console.log(res);
   const data = await res.json();
   const shop: Shop = data.shop;
 
   return (
     <div>
       <ShopHeader shop={shop} />
-    <div className="py-8 w-7xl mx-auto max-w-full">
+    <div className="py-8 inner">
       <h2 className="text-4xl font-bold text-center">{shop?.name}</h2>
       <div className="flex justify-end mt-4">
         <Button asChild>

@@ -6,7 +6,7 @@ import { signOut } from "@/auth";
 export async function GET(request: Request) {
   const session = await auth();
   const email = session?.user?.email;
-  if (!email) return NextResponse.redirect(new URL("/login", request.url));
+  if (!email) return NextResponse.redirect(new URL("/", request.url));
 
   const backendJWT = await createBackendJWTFromRequest(request);
 
@@ -19,10 +19,11 @@ export async function GET(request: Request) {
     await signOut();
     return NextResponse.redirect(new URL("/auth/signout", request.url));
   }
-  const body = await r.text();
+  const data = await r.json();
+  const diData = encodeURIComponent(JSON.stringify(data));
 
   const res = NextResponse.redirect(new URL("/", request.url));
-  res.cookies.set("di_data", body, {
+  res.cookies.set("di_data", diData, {
     httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 3,
   });
   return res;

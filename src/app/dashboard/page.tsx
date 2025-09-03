@@ -6,7 +6,8 @@ import getDataFromCookies from "@/lib/getDataFromCookies";
 export default async function Dashboard() {
   const session = await requireAuth();
   const data = await getDataFromCookies();
-  const user = data.user;
+  console.log(data);
+  const user = data?.user;
 
   return (
     <div className="py-8 w-7xl mx-auto max-w-full px-4">
