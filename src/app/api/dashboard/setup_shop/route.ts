@@ -1,11 +1,11 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import createBackendJWTFromRequest from "@/lib/createBackendJWTFromRequest";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
 
   const backendJWT = await createBackendJWTFromRequest(request);
 
-  const r = await fetch(`${process.env.RAILS_URL}/api/shop`, {
+  const r = await fetch(`${process.env.RAILS_URL}/api/shops`, {
     method: "POST",
     headers: { Authorization: `Bearer ${backendJWT}` },
     cache: "no-store",

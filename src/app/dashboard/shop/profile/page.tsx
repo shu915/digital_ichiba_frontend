@@ -3,14 +3,26 @@ import Link from "next/link";
 import ShopProfileForm from "./ShopProfileForm";
 import { requireAuth } from "@/lib/requireAuth";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
-import getDataFromCookies from "@/lib/getDataFromCookies";
-
-export const dynamic = "force-dynamic";
+import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default async function ShopProfileEdit() {
   await requireAuth();
   await requireShopOrAdmin();
-  const loginData = await getDataFromCookies();
+
+  const cookie = (await cookies()).toString();
+
+  const res = await fetch(
+    `${process.env.NEXT_URL}/api/dashboard/shop/profile`,
+    {
+      cache: "no-store",
+      headers: { Cookie: cookie },
+    }
+  );
+  if (!res.ok) {
+    return notFound();
+  }
+  const loginData = await res.json();
 
   return (
     <div className="py-8 w-7xl mx-auto max-w-full px-4">

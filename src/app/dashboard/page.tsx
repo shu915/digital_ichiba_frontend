@@ -14,7 +14,7 @@ export default async function Dashboard() {
       <h2 className="text-4xl font-bold text-center">ダッシュボード</h2>
       <div className="flex justify-end mt-4">
         {session && user?.role === "customer" && (
-          <form action="/dashboard/setup_shop" method="post">
+          <form action="/api/dashboard/setup_shop" method="post">
             <Button type="submit" className="font-bold">
               ショップを開設
             </Button>

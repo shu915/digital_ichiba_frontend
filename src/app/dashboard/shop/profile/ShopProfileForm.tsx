@@ -165,7 +165,7 @@ export default function ProfileForm({ loginData }: { loginData: LoginData }) {
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-48 mx-auto max-w-full"
+        className="w-48 mx-auto max-w-full font-bold"
       >
         保存
       </Button>
