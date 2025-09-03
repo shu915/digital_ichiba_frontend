@@ -13,7 +13,7 @@ export default async function ShopProfileEdit() {
   const cookie = (await cookies()).toString();
 
   const res = await fetch(
-    `${process.env.NEXT_URL}/api/dashboard/shop/profile`,
+    `${process.env.NEXT_URL}/api/shop`,
     {
       cache: "no-store",
       headers: { Cookie: cookie },

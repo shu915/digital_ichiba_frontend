@@ -2,24 +2,18 @@ import { requireAuth } from "@/lib/requireAuth";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import getDataFromCookies from "@/lib/getDataFromCookies";
+import CreateShop from "@/components/atoms/CreateShop";
 
 export default async function Dashboard() {
   const session = await requireAuth();
   const data = await getDataFromCookies();
-  console.log(data);
   const user = data?.user;
 
   return (
     <div className="py-8 w-7xl mx-auto max-w-full px-4">
       <h2 className="text-4xl font-bold text-center">ダッシュボード</h2>
       <div className="flex justify-end mt-4">
-        {session && user?.role === "customer" && (
-          <form action="/api/dashboard/setup_shop" method="post">
-            <Button type="submit" className="font-bold">
-              ショップを開設
-            </Button>
-          </form>
-        )}
+        {user?.role === "customer" && <CreateShop />}
         {session && user?.role === "shop" && (
           <Button asChild>
             <Link href="/dashboard/shop">

@@ -50,7 +50,7 @@ export default function ProfileForm({ loginData }: { loginData: LoginData }) {
       formData.append("shop[header]", shopHeader);
     }
 
-    const res = await fetch("/api/dashboard/shop/profile", {
+    const res = await fetch("/api/shop", {
       method: "PATCH",
       body: formData,
       cache: "no-store",
