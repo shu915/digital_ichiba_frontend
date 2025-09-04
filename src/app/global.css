@@ -120,3 +120,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .inner {
+    max-width: 72rem;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  }

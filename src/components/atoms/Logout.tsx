@@ -1,17 +1,17 @@
-// src/components/atoms/Logout.tsx
-import { signOut } from "@/auth";
-import { cookies } from "next/headers";
+"use client";
+import { logoutAction } from "@/app/actions/logout";
 
 export default function Logout() {
   return (
     <form
-      action={async () => {
-        "use server";
-        (await cookies()).delete("di_data");
-        await signOut({ redirectTo: "/" });
+      action={logoutAction}
+      onSubmit={(e) => {
+        if (!confirm("ログアウトしますか？")) e.preventDefault();
       }}
     >
-      <button type="submit" className="text-white font-bold cursor-pointer">ログアウト</button>
+      <button type="submit" className="text-white font-bold cursor-pointer">
+        ログアウト
+      </button>
     </form>
   );
 }

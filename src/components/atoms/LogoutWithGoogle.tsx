@@ -9,7 +9,7 @@ export default function SignInWithGoogle() {
       className="w-xs mx-auto"
       action={async () => {
         "use server";
-        await signIn("google", { redirectTo: "/auth/callback" });
+        await signIn("google", { redirectTo: "/api/auth/callback" });
       }}
     >
       <Button type="submit" className="rounded-full w-full">

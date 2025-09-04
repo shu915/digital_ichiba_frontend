@@ -23,7 +23,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,10 +31,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased  flex flex-col min-h-[100svh]`}
       >
         <Header />
-        {children}
+        <main className="flex-1">{children}</main>
         <Footer />
         <Toaster richColors position="top-center" />
       </body>

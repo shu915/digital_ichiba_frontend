@@ -6,7 +6,7 @@ import { signOut } from "@/auth";
 export async function GET(request: Request) {
   const session = await auth();
   const email = session?.user?.email;
-  if (!email) return NextResponse.redirect(new URL("/login", request.url));
+  if (!email) return NextResponse.redirect(new URL("/", request.url));
 
   const backendJWT = await createBackendJWTFromRequest(request);
 
