@@ -22,7 +22,7 @@ export default async function ShopPage({
     <div>
       <ShopHeader shop={shop} />
       <div className="inner flex justify-center py-8 gap-4 flex-col">
-        <PageTitle title={shop?.name} />
+        <PageTitle title={shop.name} />
         <div className="flex justify-end mt-4">
           <Button asChild>
             <Link href={`/shops/${id}`}>

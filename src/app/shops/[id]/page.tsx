@@ -21,7 +21,7 @@ export default async function ShopPage({
     <div>
       <ShopHeader shop={shop} />
     <div className="py-8 inner">
-      <PageTitle title={shop?.name} />
+      <PageTitle title={shop.name} />
       <div className="flex justify-end mt-4">
         <Button asChild>
           <Link href={`/shops/${id}/profile`}>

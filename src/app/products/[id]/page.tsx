@@ -1,17 +1,18 @@
-import Product from "@/types/Product";
+import { Product } from "@/types/product";
 import PageTitle from "@/components/atoms/PageTitle";
 import Image from "next/image";
 
 export default async function ShopProductsShowPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
   const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
     method: "GET",
     cache: "no-store",
   });
+
   const data = await res.json();
   const product: Product = data.product;
   console.log(product);
