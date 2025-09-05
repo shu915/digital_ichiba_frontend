@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ShopHeader from "@/components/atoms/ShopHeader";
+import PageTitle from "@/components/atoms/PageTitle";
 
 export default async function ShopPage({
   params,
@@ -16,13 +17,12 @@ export default async function ShopPage({
   });
   const data = await res.json();
   const shop: Shop = data.shop;
-  console.log(shop);
 
   return (
     <div>
       <ShopHeader shop={shop} />
       <div className="inner flex justify-center py-8 gap-4 flex-col">
-        <h2 className="text-4xl font-bold text-center">{shop?.name}</h2>
+        <PageTitle title={shop?.name} />
         <div className="flex justify-end mt-4">
           <Button asChild>
             <Link href={`/shops/${id}`}>

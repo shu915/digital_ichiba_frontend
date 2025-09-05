@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import getDataFromCookies from "@/lib/getDataFromCookies";
 import CreateShop from "@/components/atoms/CreateShop";
+import PageTitle from "@/components/atoms/PageTitle";
 
 export default async function Dashboard() {
   const session = await requireAuth();
@@ -11,7 +12,7 @@ export default async function Dashboard() {
 
   return (
     <div className="py-8 w-7xl mx-auto max-w-full px-4">
-      <h2 className="text-4xl font-bold text-center">ダッシュボード</h2>
+      <PageTitle title="ダッシュボード" />
       <div className="flex justify-end mt-4">
         {user?.role === "customer" && <CreateShop />}
         {session && user?.role === "shop" && (
