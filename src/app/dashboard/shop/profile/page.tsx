@@ -5,6 +5,7 @@ import { requireAuth } from "@/lib/requireAuth";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
+import PageTitle from "@/components/atoms/PageTitle";
 
 export default async function ShopProfileEdit() {
   await requireAuth();
@@ -12,13 +13,10 @@ export default async function ShopProfileEdit() {
 
   const cookie = (await cookies()).toString();
 
-  const res = await fetch(
-    `${process.env.NEXT_URL}/api/shop`,
-    {
-      cache: "no-store",
-      headers: { Cookie: cookie },
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_URL}/api/shop`, {
+    cache: "no-store",
+    headers: { Cookie: cookie },
+  });
   if (!res.ok) {
     return notFound();
   }
@@ -26,7 +24,7 @@ export default async function ShopProfileEdit() {
 
   return (
     <div className="py-8 w-7xl mx-auto max-w-full px-4">
-      <h2 className="text-4xl font-bold text-center">プロフィール編集</h2>
+      <PageTitle title="プロフィール編集" />
       <div className="flex justify-end mt-4 gap-2">
         <Button asChild>
           <Link href="/dashboard/shop">

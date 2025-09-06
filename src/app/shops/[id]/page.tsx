@@ -2,6 +2,7 @@ import Shop from "@/types/shop";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ShopHeader from "@/components/atoms/ShopHeader";
+import PageTitle from "@/components/atoms/PageTitle";
 
 export default async function ShopPage({
   params,
@@ -20,7 +21,7 @@ export default async function ShopPage({
     <div>
       <ShopHeader shop={shop} />
     <div className="py-8 inner">
-      <h2 className="text-4xl font-bold text-center">{shop?.name}</h2>
+      <PageTitle title={shop.name} />
       <div className="flex justify-end mt-4">
         <Button asChild>
           <Link href={`/shops/${id}/profile`}>

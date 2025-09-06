@@ -2,6 +2,7 @@ import { requireAuth } from "@/lib/requireAuth";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
+import PageTitle from "@/components/atoms/PageTitle";
 
 export default async function ShopDashboard() {
   await requireAuth();
@@ -11,9 +12,7 @@ export default async function ShopDashboard() {
   return (
     <div>
       <main className="py-8 w-7xl mx-auto max-w-full px-4">
-        <h2 className="text-4xl font-bold text-center">
-          ショップダッシュボード
-        </h2>
+        <PageTitle title="ショップダッシュボード" />
         <div className="flex justify-end mt-4 gap-2">
           <Button asChild>
             <Link href="/dashboard/shop/profile">

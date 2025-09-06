@@ -16,6 +16,10 @@ export default function getProxyFlags(proxy: string[], method: string) {
       setJWT = true;
       setCookie = true;
       break;
+    
+    case path === "products" && method === "POST":
+      setJWT = true;
+      break;
 
     case path.startsWith("orders"):
       setJWT = true;
