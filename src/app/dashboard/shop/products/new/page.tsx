@@ -10,7 +10,7 @@ export default async function ShopProductsNew() {
   await requireShopOrAdmin();
 
   return (
-    <div className="py-8 w-7xl mx-auto max-w-full px-4">
+    <div className="py-8 inner">
       <PageTitle title="商品新規登録" />
       <div className="flex justify-end mt-4 gap-2">
         <Button asChild>

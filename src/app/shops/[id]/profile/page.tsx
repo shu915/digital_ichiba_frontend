@@ -19,11 +19,11 @@ export default async function ShopPage({
   const shop: Shop = data.shop;
 
   return (
-    <div>
+    <div className="py-8 inner">
       <ShopHeader shop={shop} />
-      <div className="inner flex justify-center py-8 gap-4 flex-col">
+      <div className="flex justify-center gap-4 flex-col">
         <PageTitle title={shop.name} />
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end">
           <Button asChild>
             <Link href={`/shops/${id}`}>
               <span className="font-bold">商品を見る</span>

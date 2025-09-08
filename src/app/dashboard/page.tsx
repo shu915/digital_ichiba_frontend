@@ -11,7 +11,7 @@ export default async function Dashboard() {
   const user = data?.user;
 
   return (
-    <div className="py-8 w-7xl mx-auto max-w-full px-4">
+    <div className="py-8 inner">
       <PageTitle title="ダッシュボード" />
       <div className="flex justify-end mt-4">
         {user?.role === "customer" && <CreateShop />}
