@@ -19,9 +19,9 @@ export default async function ShopPage({
   const shop: Shop = data.shop;
 
   return (
-    <div className="py-8 inner">
-      <ShopHeader shop={shop} />
-      <div className="flex justify-center gap-4 flex-col">
+    <div>
+      <ShopHeader shop_header_url={shop.header_url} shop_name={shop.name} />
+      <div className="py-8 inner flex justify-center gap-4 flex-col">
         <PageTitle title={shop.name} />
         <div className="flex justify-end">
           <Button asChild>

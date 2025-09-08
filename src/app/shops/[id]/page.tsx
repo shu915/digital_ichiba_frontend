@@ -24,7 +24,7 @@ export default async function ShopPage({
 
   return (
     <div>
-      <ShopHeader shop={shop} />
+      <ShopHeader shop_header_url={shop.header_url} shop_name={shop.name} />
     <div className="py-8 inner">
       <PageTitle title={shop.name} />
       <div className="flex justify-end mt-4">
