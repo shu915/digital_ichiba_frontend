@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ShopHeader from "@/components/atoms/ShopHeader";
 import PageTitle from "@/components/atoms/PageTitle";
+import { notFound } from "next/navigation";
 
 export default async function ShopPage({
   params,
@@ -17,9 +18,13 @@ export default async function ShopPage({
   const data = await res.json();
   const shop: Shop = data.shop;
 
+  if (!shop) {
+    return notFound();
+  }
+
   return (
     <div>
-      <ShopHeader shop={shop} />
+      <ShopHeader shop_header_url={shop.header_url} shop_name={shop.name} />
     <div className="py-8 inner">
       <PageTitle title={shop.name} />
       <div className="flex justify-end mt-4">

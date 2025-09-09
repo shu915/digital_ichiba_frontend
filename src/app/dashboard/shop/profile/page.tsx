@@ -23,7 +23,7 @@ export default async function ShopProfileEdit() {
   const loginData = await res.json();
 
   return (
-    <div className="py-8 w-7xl mx-auto max-w-full px-4">
+    <div className="py-8 inner">
       <PageTitle title="プロフィール編集" />
       <div className="flex justify-end mt-4 gap-2">
         <Button asChild>

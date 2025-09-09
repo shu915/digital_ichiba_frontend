@@ -20,10 +20,10 @@ export default async function ShopPage({
 
   return (
     <div>
-      <ShopHeader shop={shop} />
-      <div className="inner flex justify-center py-8 gap-4 flex-col">
+      <ShopHeader shop_header_url={shop.header_url} shop_name={shop.name} />
+      <div className="py-8 inner flex justify-center gap-4 flex-col">
         <PageTitle title={shop.name} />
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end">
           <Button asChild>
             <Link href={`/shops/${id}`}>
               <span className="font-bold">商品を見る</span>
