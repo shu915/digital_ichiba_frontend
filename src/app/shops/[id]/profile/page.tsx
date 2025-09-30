@@ -5,12 +5,10 @@ import Link from "next/link";
 import ShopHeader from "@/components/atoms/ShopHeader";
 import PageTitle from "@/components/atoms/PageTitle";
 
-export default async function ShopPage({
-  params,
-}: {
+export default async function ShopPage(props: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
+  const { id } = await props.params;
   const res = await fetch(`${process.env.NEXT_URL}/api/shops/${id}`, {
     method: "GET",
     cache: "no-store",

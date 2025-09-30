@@ -1,7 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import createBackendJWT from "@/lib/createBackendJWT";
 
-
 export default async function createBackendJWTFromRequest(request: Request): Promise<string> {
   const token = await getToken({
     req: request,
