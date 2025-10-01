@@ -22,6 +22,7 @@ export default async function ShopProductsShowPage({
   if (!product) {
     notFound();
   }
+  console.log(product);
   return (
     <div>
       <ShopHeader shop_header_url={product.shop_header_url} shop_name={product.shop_name} />
