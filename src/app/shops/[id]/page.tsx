@@ -4,7 +4,7 @@ import Link from "next/link";
 import ShopHeader from "@/components/atoms/ShopHeader";
 import PageTitle from "@/components/atoms/PageTitle";
 import { notFound } from "next/navigation";
-import ProductsList from "./ProductsList";
+import ProductList from "./ProductList";
 
 export default async function ShopPage(props: {
   params: Promise<{ id: string }>;
@@ -35,7 +35,7 @@ export default async function ShopPage(props: {
           </Button>
         </div>
         <div>
-          <ProductsList shop_id={id} />
+          <ProductList shop_id={id} />
         </div>
       </div>
     </div>

@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { Product } from "@/types/product";
+import { ProductListType } from "@/types/productList";
 import ProductCard from "@/components/organisms/ProductCard";
 import Pagination from "@/components/organisms/Pagination";
 
-export default function ProductsList({ shop_id }: { shop_id: string }) {
+export default function ProductListClient({ shop_id, initialProducts }: { shop_id: string, initialProducts: ProductListType }) {
   const [page, setPage] = useState(1);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [totalItems, setTotalItems] = useState(0);
+  const [products, setProducts] = useState<Product[]>(initialProducts.products);
+  const [totalItems, setTotalItems] = useState(initialProducts.total_items);
 
   useEffect(() => {
+    if (page === 1) return;
     (async () => {
       try {
         const res = await fetch(
@@ -20,7 +22,7 @@ export default function ProductsList({ shop_id }: { shop_id: string }) {
             cache: "no-store",
           }
         );
-        const data = await res.json();
+        const data: ProductListType = await res.json();
         setProducts(data.products);
         setTotalItems(data.total_items);
       } catch (e) {
