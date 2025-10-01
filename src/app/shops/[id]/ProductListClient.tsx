@@ -28,7 +28,7 @@ export default function ProductListClient({ shop_id, initialProducts }: { shop_i
         console.error(e);
       }
     })();
-  }, [shop_id, page]);
+  }, [shop_id, page, initialProducts]);
 
   return (
     <div>
