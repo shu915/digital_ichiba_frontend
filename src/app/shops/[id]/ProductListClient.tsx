@@ -12,7 +12,6 @@ export default function ProductListClient({ shop_id, initialProducts }: { shop_i
   const [totalItems, setTotalItems] = useState(initialProducts.total_items);
 
   useEffect(() => {
-    if (page === 1) return;
     (async () => {
       try {
         const res = await fetch(
