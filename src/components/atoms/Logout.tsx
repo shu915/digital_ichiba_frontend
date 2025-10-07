@@ -1,10 +1,10 @@
 "use client";
-import { logoutAction } from "@/app/actions/logout";
+import { handleLogout } from "@/actions/handleLogout";
 
 export default function Logout() {
   return (
     <form
-      action={logoutAction}
+      action={handleLogout}
       onSubmit={(e) => {
         if (!confirm("ログアウトしますか？")) e.preventDefault();
       }}

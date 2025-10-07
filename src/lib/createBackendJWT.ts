@@ -24,8 +24,8 @@ export default async function createBackendJWT({
     .setProtectedHeader({ alg: "RS256", typ: "JWT" })
     .setIssuer("digital-ichiba-next")
     .setAudience("digital-ichiba-rails")
-    .setSubject(provider_subject ?? email) // ← sub は「このユーザー」を一意に指す値に統一
+    .setSubject(provider_subject ?? email)
     .setIssuedAt(now)
-    .setExpirationTime(now + 60 * 60 * 24 * 3)
+    .setExpirationTime(now + 60 * 60)
     .sign(key);
 }
