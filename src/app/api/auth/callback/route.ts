@@ -1,25 +1,21 @@
 import { NextResponse } from "next/server";
 import { auth, signOut } from "@/auth";
-import createBackendJWTFromRequest from "@/lib/createBackendJWTFromRequest";
 
 export async function GET(request: Request) {
   const session = await auth();
   const email = session?.user?.email;
   if (!email) return NextResponse.redirect(new URL("/", request.url));
 
-  const backendJWT = await createBackendJWTFromRequest(request);
-
-  const backendRes = await fetch(`${process.env.RAILS_URL}/api/login`, {
+  const railsRes = await fetch(`${process.env.RAILS_URL}/api/login`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${backendJWT}` },
     cache: "no-store",
   });
-  if (!backendRes.ok) {
+  if (!railsRes.ok) {
     await signOut();
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  const diData = encodeURIComponent(await backendRes.text());
+  const diData = await railsRes.text();
 
   const nextRes = NextResponse.redirect(new URL("/", request.url));
   nextRes.cookies.set("di_data", diData, {

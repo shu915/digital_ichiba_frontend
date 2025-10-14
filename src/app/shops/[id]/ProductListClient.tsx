@@ -1,17 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Product } from "@/types/product";
 import { ProductListType } from "@/types/productList";
 import ProductCard from "@/components/organisms/ProductCard";
 import Pagination from "@/components/organisms/Pagination";
+import { useRouter } from "next/navigation";
 
-export default function ProductListClient({ shop_id, initialProducts }: { shop_id: string, initialProducts: ProductListType }) {
-  const [page, setPage] = useState(1);
+export default function ProductListClient({
+  shop_id,
+  initialProducts,
+  initialPage,
+}: {
+  shop_id: string;
+  initialProducts: ProductListType;
+  initialPage: number;
+}) {
+  const router = useRouter();
+  const isFirstRender = useRef(true);
+
+  const [page, setPage] = useState(initialPage);
   const [products, setProducts] = useState<Product[]>(initialProducts.products);
   const [totalItems, setTotalItems] = useState(initialProducts.total_items);
 
   useEffect(() => {
+    router.replace(`?page=${page}`, { scroll: false });
+  }, [page, router]);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return; // 初回はSSRのデータをそのまま使う
+    }
     (async () => {
       try {
         const res = await fetch(
@@ -28,7 +48,7 @@ export default function ProductListClient({ shop_id, initialProducts }: { shop_i
         console.error(e);
       }
     })();
-  }, [shop_id, page, initialProducts]);
+  }, [shop_id, page]);
 
   return (
     <div>

@@ -1,30 +1,31 @@
-export default function getProxyFlags(proxy: string[], method: string) {
-  let setJWT = false;
-  let setCookie = false;
-  const path = proxy.join("/");
+export default function getProxyFlags(proxyPaths: string[], method: string) {
+  let setJwtFlag: boolean = false;
+  let setCookieFlag: boolean = false;
+  const path = proxyPaths.join("/");
 
   switch (true) {
+  
     case path === "shop" && method === "POST":
-      setJWT = true;
-      setCookie = true;
+      setJwtFlag = true;
+      setCookieFlag = true;
       break;
-    
+
     case path === "shop" && method === "GET":
-      setJWT = true;
+      setJwtFlag = true;
       break;
     case path === "shop" && method === "PATCH":
-      setJWT = true;
-      setCookie = true;
+      setJwtFlag = true;
+      setCookieFlag = true;
       break;
-    
+
     case path === "products" && method === "POST":
-      setJWT = true;
+      setJwtFlag = true;
       break;
 
     case path.startsWith("orders"):
-      setJWT = true;
+      setJwtFlag = true;
       break;
   }
 
-  return { setJWT, setCookie };
+  return { setJwtFlag, setCookieFlag };
 }

@@ -8,7 +8,7 @@ type MintPayload = {
   provider_subject?: string;
 };
 
-export default async function createBackendJWT({
+export default async function createBackendJwt({
   email,
   provider,
   provider_subject,
