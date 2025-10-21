@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/types/product";
+import ProductType from "@/types/product";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function ProductQuantityForm({ product }: { product: Product }) {
+export default function ProductQuantityForm({ product }: { product: ProductType }) {
   const [quantity, setQuantity] = useState(0);
 
   const addProductToCart = () => {
@@ -34,7 +34,7 @@ export default function ProductQuantityForm({ product }: { product: Product }) {
       </Select>
 
       <Button onClick={addProductToCart} className="mt-4">
-        カートに入れる
+        <span className="font-bold">カートに入れる</span>
       </Button>
     </div>
   );

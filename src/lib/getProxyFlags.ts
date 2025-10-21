@@ -4,7 +4,6 @@ export default function getProxyFlags(proxyPaths: string[], method: string) {
   const path = proxyPaths.join("/");
 
   switch (true) {
-  
     case path === "shop" && method === "POST":
       setJwtFlag = true;
       setCookieFlag = true;
@@ -18,7 +17,9 @@ export default function getProxyFlags(proxyPaths: string[], method: string) {
       setCookieFlag = true;
       break;
 
-    case path === "products" && method === "POST":
+    // products 配下の作成・更新・削除はJWT必須
+    case path.startsWith("products") &&
+      ["POST", "PATCH", "PUT", "DELETE"].includes(method):
       setJwtFlag = true;
       break;
 

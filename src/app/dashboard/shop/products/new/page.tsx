@@ -3,7 +3,7 @@ import Link from "next/link";
 import { requireAuth } from "@/lib/requireAuth";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
 import PageTitle from "@/components/atoms/PageTitle";
-import ShopProductsNewForm from "./ShopProductsNewForm";
+import ShopProductForm from "@/components/organisms/ShopProductForm";
 
 export default async function ShopProductsNew() {
   await requireAuth();
@@ -19,7 +19,7 @@ export default async function ShopProductsNew() {
           </Link>
         </Button>
       </div>
-      <ShopProductsNewForm />
+      <ShopProductForm product={null} />
     </div>
   );
 }

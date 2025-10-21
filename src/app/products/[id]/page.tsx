@@ -5,6 +5,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductQuantityForm from "./ProductQuantityForm";
 import ShopHeader from "@/components/atoms/ShopHeader";
+import { cookies } from "next/headers";
+import { Button } from "@/components/ui/button";
+import DeleteProduct from "./DeleteProduct";
 
 export default async function ShopProductsShowPage({
   params,
@@ -22,7 +25,13 @@ export default async function ShopProductsShowPage({
   if (!product) {
     notFound();
   }
-  console.log(product);
+
+  const cookie = (await cookies()).get("di_data")?.value;
+  const shop = JSON.parse(decodeURIComponent(cookie ?? "{}")).shop;
+  const isOwner = product.shop_id === shop?.id;
+
+  
+  
   return (
     <div>
       <ShopHeader
@@ -47,7 +56,21 @@ export default async function ShopProductsShowPage({
                 </Link>
               </div>
               <p>税込価格:{product?.price_including_tax_cents}円</p>
-              <ProductQuantityForm product={product} />
+              {isOwner && (
+                <>
+                 <Button asChild>
+                 <Link
+                   href={`/dashboard/shop/products/${product.id}/edit`}
+                 >
+                   <span className="font-bold">編集する</span>
+                 </Link>
+                </Button>
+                <DeleteProduct id={product.id} />
+                </>
+              )}
+              {!isOwner && (
+                <ProductQuantityForm product={product} />
+              )}
             </div>
           </div>
           <p className="mt-4">{product?.description}</p>
