@@ -8,7 +8,7 @@ import {
   DialogTrigger,
   DialogDescription,
 } from "@/components/ui/dialog";
-import SignInWithGoogle from "../atoms/LogoutWithGoogle";
+import SignInWithGoogle from "../atoms/LoginWithGoogle";
 
 export default function LoginDialog() {
   return (

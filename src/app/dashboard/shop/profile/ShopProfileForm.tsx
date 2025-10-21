@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { LoginData } from "@/types/loginData";
+import LoginDataType from "@/types/loginData";
 import { useRouter } from "next/navigation";
-import { imageFileOptional } from "@/lib/FormImageSchema";
+import { imageFileOptional } from "@/lib/formImageSchema";
 
 const schema = z.object({
   shop_name: z.string().min(1, "名前は必須です").max(40),
@@ -19,7 +19,7 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-export default function ProfileForm({ loginData }: { loginData: LoginData }) {
+export default function ProfileForm({ loginData }: { loginData: LoginDataType }) {
   const shop = loginData?.shop;
   const router = useRouter();
 

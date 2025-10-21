@@ -1,4 +1,4 @@
-import Shop from "@/types/shop";
+import ShopType from "@/types/shop";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export default async function ShopPage(props: {
     cache: "no-store",
   });
   const data = await res.json();
-  const shop: Shop = data.shop;
+  const shop: ShopType = data.shop;
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import Shop from "@/types/shop";
+import ShopType from "@/types/shop";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ShopHeader from "@/components/atoms/ShopHeader";
@@ -6,17 +6,22 @@ import PageTitle from "@/components/atoms/PageTitle";
 import { notFound } from "next/navigation";
 import ProductList from "./ProductList";
 
-export default async function ShopPage(props: {
-  params: Promise<{ id: string }>;
+export default async function ShopPage({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { page?: string };
 }) {
-  const { id } = await props.params;
+  const { id } = params;
+  const page = Number(searchParams?.page) || 1;
 
   const res = await fetch(`${process.env.NEXT_URL}/api/shops/${id}`, {
     method: "GET",
     cache: "no-store",
   });
   const data = await res.json();
-  const shop: Shop = data.shop;
+  const shop: ShopType = data.shop;
 
   if (!shop) {
     return notFound();
@@ -35,7 +40,7 @@ export default async function ShopPage(props: {
           </Button>
         </div>
         <div>
-          <ProductList shop_id={id} />
+          <ProductList shop_id={id} page={page} />
         </div>
       </div>
     </div>
