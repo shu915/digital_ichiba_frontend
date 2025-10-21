@@ -1,13 +1,15 @@
 "use client";
-import { z } from "zod";
+import { useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { imageFileRequired } from "@/lib/FormImageSchema";
+
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useRef } from "react";
+
+import { imageFileRequired } from "@/lib/formImageSchema";
 
 export default function ShopProductsNewForm() {
   const schema = z.object({
@@ -134,6 +136,7 @@ export default function ShopProductsNewForm() {
             {...register("product_price", { valueAsNumber: true })}
           />
         </div>
+
         <div className="flex flex-col gap-1">
           <label htmlFor="product_stock" className="font-bold">
             在庫

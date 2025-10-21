@@ -1,4 +1,4 @@
-type Shop = {
+type ShopType = {
   id: string;
   name: string;
   description: string;
@@ -8,4 +8,4 @@ type Shop = {
   updated_at: string;
 };
 
-export default Shop;
+export default ShopType;

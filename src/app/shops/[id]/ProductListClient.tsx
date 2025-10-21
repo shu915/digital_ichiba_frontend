@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Product } from "@/types/product";
-import { ProductListType } from "@/types/productList";
+import ProductType from "@/types/product";
+import ProductListType from "@/types/productList";
 import ProductCard from "@/components/organisms/ProductCard";
 import Pagination from "@/components/organisms/Pagination";
 import { useRouter } from "next/navigation";
@@ -19,9 +19,11 @@ export default function ProductListClient({
   const router = useRouter();
   const isFirstRender = useRef(true);
 
-  const [page, setPage] = useState(initialPage);
-  const [products, setProducts] = useState<Product[]>(initialProducts.products);
-  const [totalItems, setTotalItems] = useState(initialProducts.total_items);
+  const [page, setPage] = useState<number>(initialPage);
+  const [products, setProducts] = useState<ProductType[]>(
+    initialProducts.products
+  );
+  const [totalItems, setTotalItems] = useState<number>(initialProducts.total_items);
 
   useEffect(() => {
     router.replace(`?page=${page}`, { scroll: false });
@@ -57,7 +59,7 @@ export default function ProductListClient({
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <div className="mt-4">
+      <div className="mt-8">
         <Pagination
           page={page}
           setPage={setPage}

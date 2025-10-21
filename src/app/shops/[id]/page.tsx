@@ -1,4 +1,4 @@
-import Shop from "@/types/shop";
+import ShopType from "@/types/shop";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ShopHeader from "@/components/atoms/ShopHeader";
@@ -21,7 +21,7 @@ export default async function ShopPage({
     cache: "no-store",
   });
   const data = await res.json();
-  const shop: Shop = data.shop;
+  const shop: ShopType = data.shop;
 
   if (!shop) {
     return notFound();

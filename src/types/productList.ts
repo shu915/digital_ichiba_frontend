@@ -1,6 +1,8 @@
-import { Product } from "./product";
+import ProductType from "./product";
 
-export type ProductListType = {
-  products: Product[];
+type ProductListType = {
+  products: ProductType[];
   total_items: number;
-};  
+};
+
+export default ProductListType;

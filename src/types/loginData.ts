@@ -1,7 +1,9 @@
-import User from "./user";
-import Shop from "./shop";
+import UserType from "./user";
+import ShopType from "./shop";
 
-export type LoginData = {
-  user: User;
-  shop: Shop;
+type LoginDataType = {
+  user: UserType;
+  shop: ShopType;
 };
+
+export default LoginDataType;

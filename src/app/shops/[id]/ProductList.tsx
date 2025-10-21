@@ -1,5 +1,5 @@
 import ProductListClient from "./ProductListClient";
-import { ProductListType } from "@/types/productList";
+import ProductListType from "@/types/productList";
 import { notFound } from "next/navigation";
 
 export default async function ProductList({

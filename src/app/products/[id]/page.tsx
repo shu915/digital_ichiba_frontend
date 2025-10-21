@@ -1,4 +1,4 @@
-import { Product } from "@/types/product";
+import ProductType from "@/types/product";
 import PageTitle from "@/components/atoms/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,14 +18,17 @@ export default async function ShopProductsShowPage({
   });
 
   const data = await res.json();
-  const product: Product = data.product;
+  const product: ProductType = data.product;
   if (!product) {
     notFound();
   }
   console.log(product);
   return (
     <div>
-      <ShopHeader shop_header_url={product.shop_header_url} shop_name={product.shop_name} />
+      <ShopHeader
+        shop_header_url={product.shop_header_url}
+        shop_name={product.shop_name}
+      />
       <div className="py-8 inner">
         <PageTitle title={product?.name} />
         <div className="mt-4 w-[660px] mx-auto">
