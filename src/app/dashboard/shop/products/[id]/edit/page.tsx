@@ -20,6 +20,9 @@ export default async function ShopProductsEdit({
     method: "GET",
     cache: "no-store",
   });
+  if (!res.ok) {
+    return notFound();
+  }
   const data = await res.json();
   const product: ProductType = data.product;
   if (!product) {

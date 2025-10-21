@@ -17,8 +17,13 @@ Next.js 15.5.0
 Auth.js 5.0.0-beta.29  
 TailwindCSS 4.1.12  
 
-こちらは同じプロジェクトのバックエンドエンドのリポジトリです。  
+こちらは同じプロジェクトのバックエンドのリポジトリです。  
 Ruby 3.3.9  
 Rails 8.0.2.1  
 Postgresql 16.10  
 Docker 28.4.0  
+
+## Setup
+```
+npm run dev
+```

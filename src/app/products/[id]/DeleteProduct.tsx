@@ -2,9 +2,10 @@
 
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function DeleteProduct({ id }: { id: string }) {
+  const router = useRouter();
   const deleteProduct = async () => {
     if (!confirm("商品を削除しますか？")) {
       return;
@@ -14,7 +15,7 @@ export default function DeleteProduct({ id }: { id: string }) {
       cache: "no-store",
     });
     if (res.ok) {
-      redirect("/dashboard/shop");
+      router.push("/dashboard/shop");
     } else {
       toast("商品の削除に失敗しました");
     }
