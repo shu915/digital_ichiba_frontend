@@ -13,7 +13,7 @@ import {
 import CartItemType from "@/types/cartItem";
 import { toast } from "sonner";
 
-export default function ProductQuantityForm({
+export default function ProductAddToCartForm({
   product,
 }: {
   product: ProductType;

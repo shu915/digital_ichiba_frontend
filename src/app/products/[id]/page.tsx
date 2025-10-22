@@ -3,7 +3,7 @@ import PageTitle from "@/components/atoms/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ProductQuantityForm from "./ProductForm";
+import ProductAddToCartForm from "./ProductAddToCartForm";
 import ShopHeader from "@/components/atoms/ShopHeader";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
@@ -69,7 +69,7 @@ export default async function ShopProductsShowPage({
                 </>
               )}
               {!isOwner && (
-                <ProductQuantityForm product={product} />
+                <ProductAddToCartForm product={product} />
               )}
             </div>
           </div>

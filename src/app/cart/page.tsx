@@ -11,6 +11,7 @@ export default function CartPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [quantityById, setQuantityById] = useState<Record<number, number>>({});
   const clearCart = () => {
+    if (!confirm("カートを空にしますか？")) return;
     localStorage.removeItem("cart");
     localStorage.removeItem("cartShopId");
     setProducts([]);
