@@ -39,7 +39,9 @@ export default async function Header() {
               ダッシュボード
             </Link>
           )}
-          <div className="text-white font-bold">カート</div>
+          <div className="text-white font-bold">
+            <Link href="/cart">カート</Link>
+          </div>
           {session ? <Logout /> : <LoginDialog />}
         </div>
       </div>

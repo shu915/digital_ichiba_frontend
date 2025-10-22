@@ -3,7 +3,7 @@ import PageTitle from "@/components/atoms/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import ProductQuantityForm from "./ProductQuantityForm";
+import ProductQuantityForm from "./ProductForm";
 import ShopHeader from "@/components/atoms/ShopHeader";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
