@@ -49,6 +49,7 @@ export default function CartPage() {
   return (
     <div>
       {products.length > 0 && (
+        console.log(products[0]),
         <div>
           {products[0].shop_header_url && (
             <ShopHeader
@@ -72,7 +73,8 @@ export default function CartPage() {
         </div>
         {products.length > 0 && (
           <div className="mt-6 overflow-x-auto">
-            <table className="w-full text-center border-collapse">
+            <h2 className=" text-center text-2xl font-bold">{products[0].shop_name}</h2>
+            <table className="mt-4 w-full text-center border-collapse">
               <thead>
                 <tr className="border-b">
                   <th className="p-2">イメージ</th>
