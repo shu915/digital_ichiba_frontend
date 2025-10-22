@@ -15,6 +15,7 @@ export default function CartPage() {
     localStorage.removeItem("cart");
     localStorage.removeItem("cartShopId");
     setProducts([]);
+    setQuantityById({});
   };
   useEffect(() => {
     try {

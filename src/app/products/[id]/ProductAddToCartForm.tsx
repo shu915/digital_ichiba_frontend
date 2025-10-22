@@ -34,36 +34,28 @@ export default function ProductAddToCartForm({
       return;
     }
 
-    // 既存の同じ商品があるか探す（idは文字列で比較）
     const existingIndex = cart.findIndex(
       (item: CartItemType) => item.productId === Number(product.id)
     );
 
     if (existingIndex >= 0) {
-      // すでにあれば quantity を加算
       cart[existingIndex].quantity += quantity;
 
-      // quantityが0以下になったら削除
       if (cart[existingIndex].quantity <= 0) {
         cart.splice(existingIndex, 1);
       }
     } else {
-      // なければ新規追加（quantityが1以上の場合のみ）
       if (quantity > 0) {
         cart.push({ productId: Number(product.id), quantity });
       }
     }
 
-    // cartShopId の維持/設定/削除
     if (cart.length > 0) {
-      // カートに商品があれば、そのショップIDを保持
       localStorage.setItem("cartShopId", currentShopId);
     } else {
-      // カートが空になったらショップ紐付けを解除
       localStorage.removeItem("cartShopId");
     }
 
-    // 保存
     localStorage.setItem("cart", JSON.stringify(cart));
 
     toast.success("カートに追加しました！");
