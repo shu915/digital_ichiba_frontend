@@ -8,13 +8,11 @@ import ShopHeader from "@/components/atoms/ShopHeader";
 import CartTableBody from "./CartTableBody";
 
 export default function CartPage() {
-  const [_, setProductIds] = useState<number[]>([]);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [quantityById, setQuantityById] = useState<Record<number, number>>({});
   const clearCart = () => {
     localStorage.removeItem("cart");
     localStorage.removeItem("cartShopId");
-    setProductIds([]);
     setProducts([]);
   };
   useEffect(() => {
@@ -22,9 +20,6 @@ export default function CartPage() {
       const cartJson = localStorage.getItem("cart");
       if (cartJson) {
         const cartItems = JSON.parse(cartJson) as CartItemType[];
-        const ids = cartItems.map((item) => item.productId);
-        setProductIds(ids);
-        console.log("カート内の productIds:", ids);
 
         const qMap: Record<number, number> = {};
         for (const item of cartItems) {
@@ -33,7 +28,7 @@ export default function CartPage() {
         setQuantityById(qMap);
 
         (async () => {
-          const res = await fetch(`/api/products?ids=${ids.join(",")}`);
+          const res = await fetch(`/api/products?ids=${cartItems.map((item: CartItemType) => item.productId).join(",")}`);
           const data = await res.json();
           setProducts(data.products);
         })();
