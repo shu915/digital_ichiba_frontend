@@ -10,11 +10,11 @@ export default async function ShopPage({
   params,
   searchParams,
 }: {
-  params: { id: string };
-  searchParams: { page?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const { id } = params;
-  const page = Number(searchParams?.page) || 1;
+  const { id } = await params;
+  const page = Number((await searchParams).page) || 1;
 
   const res = await fetch(`${process.env.NEXT_URL}/api/shops/${id}`, {
     method: "GET",

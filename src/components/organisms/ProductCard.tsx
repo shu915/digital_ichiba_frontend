@@ -1,8 +1,8 @@
-import { Product } from "@/types/product";
+import ProductType from "@/types/product";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({ product }: { product: ProductType }) {
   return (
     <div className="w-full border border-gray-200 rounded-md">
       <Link href={`/products/${product.id}`} className="w-full block p-2">

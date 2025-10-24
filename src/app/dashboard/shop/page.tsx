@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
 import PageTitle from "@/components/atoms/PageTitle";
+import StripeButton from "./StripeButton";
 
 export default async function ShopDashboard() {
   await requireAuth();
   const data = await requireShopOrAdmin();
   const user = data.user;
-
   return (
     <div>
       <main className="py-8 inner">
@@ -24,6 +24,7 @@ export default async function ShopDashboard() {
               <span className="font-bold">商品新規登録</span>
             </Link>
           </Button>
+          <StripeButton />
         </div>
         <p>{user.name}</p>
         <p>{user.email}</p>

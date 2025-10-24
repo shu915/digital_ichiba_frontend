@@ -50,7 +50,6 @@ export default function CartPage() {
   return (
     <div>
       {products.length > 0 && (
-        console.log(products[0]),
         <div>
           {products[0].shop_header_url && (
             <ShopHeader
