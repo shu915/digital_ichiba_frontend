@@ -19,7 +19,7 @@ export default function NewProductButton({
           return;
         }
         toast.error(
-          "先にStripeのオンボーディングを完了してください。オンボーディングしたあとに再ログインしてください"
+          "先にStripeのオンボーディングを完了してください。"
         );
       }}
     >
