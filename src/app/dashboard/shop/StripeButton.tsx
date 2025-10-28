@@ -21,13 +21,10 @@ export default function StripeButton({
           method: "POST",
           cache: "no-store",
         });
-        if (res.ok) {
-          const data = await res.json();
-          window.location.href = data.onboarding_url;
-        }
-        if (res.status === 409) {
-          toast.success("Stripe連携済みです");
-        }
+        if (!res.ok) return;
+        const data = await res.json();
+        const url = data.onboarding_url || data.login_url;
+        if (url) window.location.href = url;
       }}
     >
       <span className="font-bold">Stripe連携</span>
