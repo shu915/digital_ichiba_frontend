@@ -23,6 +23,11 @@ export default async function ShopDashboard() {
           </Button>
           <NewProductButton onboarded={onboarded} />
           <StripeButton />
+          <Button asChild>
+            <Link href={`/shops/${data.shop?.id}`}>
+              <span className="font-bold">ショップページを見る</span>
+            </Link>
+          </Button>
         </div>
         <p>{user.name}</p>
         <p>{user.email}</p>
