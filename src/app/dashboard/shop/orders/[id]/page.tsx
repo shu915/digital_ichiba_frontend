@@ -85,7 +85,7 @@ export default function ShopOrderShowPage() {
 
       <div className="mt-8 overflow-x-auto">
         <h2 className="font-bold text-lg">商品</h2>
-        <table className="mt-2 w-full text-center border-collapse">
+        <table className="mt-2 w-full min-w-[640px] text-center border-collapse">
           <thead>
             <tr className="border-b">
               <th className="p-2">商品名</th>

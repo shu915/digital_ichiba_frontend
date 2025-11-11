@@ -113,7 +113,7 @@ export default function ShopProductForm({
     <form
       ref={formRef}
       onSubmit={handleSubmit(onSubmit)}
-      className="w-3xl mx-auto p-4 flex flex-col gap-6"
+      className="max-w-3xl w-full mx-auto p-4 flex flex-col gap-6"
     >
       <div className="flex flex-col gap-1">
         <label htmlFor="product_name" className="font-bold">

@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import PageTitle from "@/components/atoms/PageTitle";
 import { useParams } from "next/navigation";
-import type { CustomerOrderDetailType, CustomerOrderItemType } from "@/types/order";
+import type {
+  CustomerOrderDetailType,
+  CustomerOrderItemType,
+} from "@/types/order";
 
 export default function OrderShowPage() {
   const params = useParams<{ id: string }>();
@@ -80,7 +83,7 @@ export default function OrderShowPage() {
 
       <div className="mt-8 overflow-x-auto">
         <h2 className="font-bold text-lg">商品</h2>
-        <table className="mt-2 w-full text-center border-collapse">
+        <table className="mt-2 w-full min-w-[640px] text-center border-collapse">
           <thead>
             <tr className="border-b">
               <th className="p-2">商品名</th>

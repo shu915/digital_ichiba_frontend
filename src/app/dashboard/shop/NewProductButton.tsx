@@ -13,14 +13,13 @@ export default function NewProductButton({
 
   return (
     <Button
+      className="w-full sm:w-auto"
       onClick={() => {
         if (onboarded) {
           router.push("/dashboard/shop/products/new");
           return;
         }
-        toast.error(
-          "先にStripeのオンボーディングを完了してください。"
-        );
+        toast.error("先にStripeのオンボーディングを完了してください。");
       }}
     >
       <span className="font-bold">商品新規登録</span>

@@ -31,29 +31,39 @@ export default async function ShopDashboard() {
     <div>
       <main className="py-8 inner">
         <PageTitle title="ショップダッシュボード" />
-        <div className="flex justify-end mt-4 gap-2">
-          <Button asChild>
-            <Link href="/dashboard/shop/profile">
-              <span className="font-bold">プロフィール編集</span>
-            </Link>
-          </Button>
-          <NewProductButton onboarded={onboarded} />
-          <StripeButton />
-          <Button asChild>
-            <Link href={`/shops/${data.shop?.id}`}>
-              <span className="font-bold">ショップページを見る</span>
-            </Link>
-          </Button>
+        <div className="flex flex-col sm:flex-row justify-end items-stretch sm:items-center mt-4 gap-2">
+          <div className="w-full sm:w-auto">
+            <Button asChild className="w-full sm:w-auto">
+              <Link href="/dashboard/shop/profile">
+                <span className="font-bold">プロフィール編集</span>
+              </Link>
+            </Button>
+          </div>
+          <div className="w-full sm:w-auto">
+            <NewProductButton onboarded={onboarded} />
+          </div>
+          <div className="w-full sm:w-auto">
+            <StripeButton />
+          </div>
+          <div className="w-full sm:w-auto">
+            <Button asChild className="w-full sm:w-auto">
+              <Link href={`/shops/${data.shop?.id}`}>
+                <span className="font-bold">ショップページを見る</span>
+              </Link>
+            </Button>
+          </div>
         </div>
-        <p>{user.name}</p>
-        <p>{user.email}</p>
-        <p>{user.role}</p>
+        <div className="mt-4 space-y-1 text-sm sm:text-base">
+
+          <p>メールアドレス:{user.email}</p>
+          <p>ロール:{user.role}</p>
+        </div>
         {/* 受注一覧 */}
         {orders.length > 0 && (
           <div className="mt-8">
             <h2 className="text-xl font-bold">受注一覧</h2>
             <div className="mt-4 overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+              <table className="w-full min-w-[640px] text-left border-collapse text-sm sm:text-base">
                 <thead>
                   <tr className="border-b">
                     <th className="p-2">日付</th>
