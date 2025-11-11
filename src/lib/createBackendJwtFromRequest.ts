@@ -9,6 +9,7 @@ export default async function createBackendJwtFromRequest(
     req: request,
     secret: process.env.AUTH_SECRET,
   });
+  
   if (!token?.email) throw new Error("unauthorized");
 
   return createBackendJwt({
