@@ -6,6 +6,7 @@ import ProductType from "@/types/product";
 import { Button } from "@/components/ui/button";
 import ShopHeader from "@/components/atoms/ShopHeader";
 import CartTableBody from "./CartTableBody";
+import CheckoutButton from "./CheckoutButton";
 
 export default function CartPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -30,7 +31,11 @@ export default function CartPage() {
         setQuantityById(qMap);
 
         (async () => {
-          const res = await fetch(`/api/products?ids=${cartItems.map((item: CartItemType) => item.productId).join(",")}`);
+          const res = await fetch(
+            `/api/products?ids=${cartItems
+              .map((item: CartItemType) => item.productId)
+              .join(",")}`
+          );
           const data = await res.json();
           setProducts(data.products);
         })();
@@ -47,10 +52,12 @@ export default function CartPage() {
     const qty = quantityById[Number(p.id)] ?? 0;
     return sum + p.price_including_tax_cents * qty;
   }, 0);
+  const shippingCents = products.length > 0 ? 500 : 0;
+  const grandTotalCents = totalCents + shippingCents;
+
   return (
     <div>
       {products.length > 0 && (
-        console.log(products[0]),
         <div>
           {products[0].shop_header_url && (
             <ShopHeader
@@ -74,7 +81,9 @@ export default function CartPage() {
         </div>
         {products.length > 0 && (
           <div className="mt-6 overflow-x-auto">
-            <h2 className=" text-center text-2xl font-bold">{products[0].shop_name}</h2>
+            <h2 className=" text-center text-2xl font-bold">
+              {products[0].shop_name}
+            </h2>
             <table className="mt-4 w-full text-center border-collapse">
               <thead>
                 <tr className="border-b">
@@ -89,14 +98,26 @@ export default function CartPage() {
               <tfoot>
                 <tr className="border-t">
                   <td className="p-2 text-right font-bold" colSpan={4}>
-                    合計
+                    小計
                   </td>
                   <td className="p-2 font-bold">{totalCents}円</td>
+                </tr>
+                <tr className="border-t">
+                  <td className="p-2 text-right font-bold" colSpan={4}>
+                    送料
+                  </td>
+                  <td className="p-2 font-bold">{shippingCents}円</td>
+                </tr>
+                <tr className="border-t">
+                  <td className="p-2 text-right font-bold" colSpan={4}>
+                    合計
+                  </td>
+                  <td className="p-2 font-bold">{grandTotalCents}円</td>
                 </tr>
               </tfoot>
             </table>
             <div className="flex justify-center mt-4">
-              <Button><span className="font-bold">決済する</span></Button>
+              <CheckoutButton />
             </div>
           </div>
         )}

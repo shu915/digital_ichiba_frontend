@@ -5,7 +5,7 @@ export default function ShopHeader({ shop_header_url, shop_name }: { shop_header
   return (
     <>
     {shop_header_url && (
-      <div className="relative w-full h-56 sm:h-60">
+        <div className="relative w-full h-56 sm:h-60">
         <Image
           src={shop_header_url}
           alt={shop_name}

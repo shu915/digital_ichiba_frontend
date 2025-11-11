@@ -55,12 +55,13 @@ export default async function handleProxyRequest(
 
     const nextRes = NextResponse.json(railsRes, { status: response.status });
 
-    if (setCookieFlag) {
+    if (setCookieFlag && railsRes?.shop) {
       const diDataForCookie = {
-        user: railsRes.user,
+        user: railsRes.user ?? undefined,
         shop: {
           id: railsRes.shop.id,
           name: railsRes.shop.name,
+          stripe_onboarded: railsRes.shop.stripe_onboarded,
         },
       };
 
