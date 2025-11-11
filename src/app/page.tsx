@@ -1,7 +1,6 @@
 import ProductCard from "@/components/organisms/ProductCard";
 import PageTitle from "@/components/atoms/PageTitle";
-import Image from "next/image";
-import Link from "next/link";
+import ShopListItem from "@/components/organisms/ShopListItem";
 import type ProductType from "@/types/product";
 
 export default async function Home() {
@@ -48,35 +47,15 @@ export default async function Home() {
       <div className="mt-12">
         <PageTitle title="新着ショップ" />
         {shops.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mt-4">
+          <div className="flex flex-col gap-3 mt-4">
             {shops.map((s) => (
-              <Link
+              <ShopListItem
                 key={s.id}
-                href={`/shops/${s.id}`}
-                className="border rounded p-3 hover:bg-muted/40 transition"
-              >
-                <div className="flex items-center gap-3">
-                  {s.icon_url ? (
-                    <Image
-                      src={s.icon_url}
-                      alt={s.name}
-                      width={48}
-                      height={48}
-                      className="rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-muted" />
-                  )}
-                  <div className="min-w-0">
-                    <p className="font-bold truncate">{s.name}</p>
-                    {s.description && (
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {s.description}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </Link>
+                id={s.id}
+                name={s.name}
+                description={s.description}
+                icon_url={s.icon_url}
+              />
             ))}
           </div>
         ) : (
