@@ -5,7 +5,7 @@ import getDataFromCookies from "@/lib/getDataFromCookies";
 import CreateShop from "@/components/atoms/CreateShop";
 import PageTitle from "@/components/atoms/PageTitle";
 import { cookies } from "next/headers";
-import { OrderType } from "@/types/order";
+import { CustomerOrderType } from "@/types/order";
 
 export default async function Dashboard() {
   const session = await requireAuth();
@@ -52,7 +52,7 @@ export default async function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((o: OrderType) => (
+                {orders.map((o: CustomerOrderType) => (
                   <tr key={o.id} className="border-b">
                     <td className="p-2">
                       {new Date(o.placed_at ?? "").toLocaleString("ja-JP")}

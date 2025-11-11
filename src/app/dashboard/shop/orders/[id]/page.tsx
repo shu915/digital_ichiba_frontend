@@ -3,17 +3,17 @@
 import { useEffect, useState } from "react";
 import PageTitle from "@/components/atoms/PageTitle";
 import { useParams } from "next/navigation";
-import type { CustomerOrderDetailType, CustomerOrderItemType } from "@/types/order";
+import type { ShopOrderDetailType } from "@/types/order";
 
-export default function OrderShowPage() {
+export default function ShopOrderShowPage() {
   const params = useParams<{ id: string }>();
-  const [order, setOrder] = useState<CustomerOrderDetailType | null>(null);
+  const [order, setOrder] = useState<ShopOrderDetailType | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`/api/orders/${params.id}`, {
+        const res = await fetch(`/api/shop/orders/${params.id}`, {
           cache: "no-store",
         });
         if (!res.ok) {
@@ -33,7 +33,7 @@ export default function OrderShowPage() {
   if (loading) {
     return (
       <div className="py-8 inner">
-        <PageTitle title="注文詳細" />
+        <PageTitle title="受注詳細" />
         <p className="mt-6 text-center">読み込み中...</p>
       </div>
     );
@@ -42,21 +42,26 @@ export default function OrderShowPage() {
   if (!order) {
     return (
       <div className="py-8 inner">
-        <PageTitle title="注文詳細" />
-        <p className="mt-6 text-center">注文が見つかりませんでした。</p>
+        <PageTitle title="受注詳細" />
+        <p className="mt-6 text-center">受注が見つかりませんでした。</p>
       </div>
     );
   }
 
   return (
     <div className="py-8 inner">
-      <PageTitle title="注文詳細" />
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <PageTitle title="受注詳細" />
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="border rounded p-4">
           <h2 className="font-bold mb-2">注文情報</h2>
           <p>注文ID: {order.id}</p>
           <p>注文日時: {new Date(order.placed_at).toLocaleString("ja-JP")}</p>
           <p>ステータス: {order.status}</p>
+        </div>
+        <div className="border rounded p-4">
+          <h2 className="font-bold mb-2">購入者</h2>
+          <p>氏名: {order.customer?.name ?? "-"}</p>
+          <p>メール: {order.customer?.email ?? "-"}</p>
         </div>
         <div className="border rounded p-4">
           <h2 className="font-bold mb-2">配送先</h2>
@@ -90,7 +95,7 @@ export default function OrderShowPage() {
             </tr>
           </thead>
           <tbody>
-            {order.items.map((it: CustomerOrderItemType) => (
+            {order.items.map((it) => (
               <tr key={`${order.id}-${it.product_id}`} className="border-b">
                 <td className="p-2">{it.title}</td>
                 <td className="p-2">{it.unit_price_cents}円</td>

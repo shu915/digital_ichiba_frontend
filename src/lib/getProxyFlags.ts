@@ -28,6 +28,10 @@ export default function getProxyFlags(proxyPaths: string[], method: string) {
       setJwtFlag = true;
       break;
 
+    case path.startsWith("shop/orders") && method === "GET":
+      setJwtFlag = true;
+      break;
+
     case path === "stripe_accounts" && method === "POST":
       setJwtFlag = true;
       break;
