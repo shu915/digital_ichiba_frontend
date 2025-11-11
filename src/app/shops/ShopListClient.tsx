@@ -57,7 +57,7 @@ export default function ShopListClient({
           page={page}
           setPage={setPage}
           totalItems={totalItems}
-          perPage={12}
+          perPage={10}
         />
       </div>
     </div>
