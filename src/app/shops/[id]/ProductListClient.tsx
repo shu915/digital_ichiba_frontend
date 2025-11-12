@@ -23,7 +23,9 @@ export default function ProductListClient({
   const [products, setProducts] = useState<ProductType[]>(
     initialProducts.products
   );
-  const [totalItems, setTotalItems] = useState<number>(initialProducts.total_items);
+  const [totalItems, setTotalItems] = useState<number>(
+    initialProducts.total_items
+  );
 
   useEffect(() => {
     router.replace(`?page=${page}`, { scroll: false });
@@ -54,7 +56,7 @@ export default function ProductListClient({
 
   return (
     <div>
-      <div className="grid grid-cols-4 gap-2 mt-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

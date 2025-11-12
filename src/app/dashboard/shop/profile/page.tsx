@@ -25,7 +25,7 @@ export default async function ShopProfileEdit() {
   return (
     <div className="py-8 inner">
       <PageTitle title="プロフィール編集" />
-      <div className="flex justify-end mt-4 gap-2">
+      <div className="flex flex-wrap justify-end mt-4 gap-2">
         <Button asChild>
           <Link href="/dashboard/shop">
             <span className="font-bold">ショップダッシュボードへ</span>

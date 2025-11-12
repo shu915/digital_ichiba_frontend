@@ -17,7 +17,7 @@ export default function CreateShop() {
   };
 
   return (
-    <Button onClick={onSubmit} className="font-bold">
+    <Button onClick={onSubmit} className="w-full sm:w-auto font-bold">
       ショップを開設
     </Button>
   );

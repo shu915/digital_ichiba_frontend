@@ -16,6 +16,7 @@ export default function StripeButton({
 
   return (
     <Button
+      className="w-full sm:w-auto"
       onClick={async () => {
         const res = await fetch("/api/stripe_accounts", {
           method: "POST",

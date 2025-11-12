@@ -84,7 +84,7 @@ export default function CartPage() {
             <h2 className=" text-center text-2xl font-bold">
               {products[0].shop_name}
             </h2>
-            <table className="mt-4 w-full text-center border-collapse">
+            <table className="mt-4 w-full min-w-[640px] text-center border-collapse text-sm sm:text-base">
               <thead>
                 <tr className="border-b">
                   <th className="p-2">イメージ</th>

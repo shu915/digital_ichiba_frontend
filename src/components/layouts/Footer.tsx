@@ -3,8 +3,8 @@ import Link from "next/link";
 export default async function Footer() {
   return (
     <div className="bg-black py-8">
-      <div className="inner flex justify-between items-top text-white font-bold">
-        <div>
+      <div className="inner flex flex-col sm:flex-row justify-between items-start gap-6 text-white font-bold">
+        <div className="w-full sm:w-auto">
           <Link href="/shops">
             <span className="font-bold text-white">ショップ一覧</span>
           </Link>
@@ -12,17 +12,17 @@ export default async function Footer() {
 
         <ul className="flex flex-col gap-2">
           <li>
-            <a href="#">このサイトについて</a>
+            <Link href="/about">このサイトについて</Link>
           </li>
           <li>
-            <a href="#">プライバシーポリシー</a>
+            <Link href="/privacy">プライバシーポリシー</Link>
           </li>
           <li>
-            <a href="#">利用規約</a>
+            <Link href="/terms">利用規約</Link>
           </li>
         </ul>
       </div>
-      <small className="text-center text-white block">
+      <small className="text-center text-white block mt-6 sm:mt-8">
         &copy; 2025 Digital Ichiba
       </small>
     </div>

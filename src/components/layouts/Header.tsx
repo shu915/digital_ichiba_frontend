@@ -15,7 +15,7 @@ export default async function Header() {
 
   return (
     <div className="bg-black">
-      <div className="w-7xl mx-auto max-w-full flex justify-between items-center p-4">
+      <div className="w-7xl mx-auto max-w-full flex flex-wrap justify-between items-center gap-y-3 p-4">
         <Link href="/">
           <div className="flex items-center gap-2">
             <figure className="mt-1.5">
@@ -33,7 +33,7 @@ export default async function Header() {
             </h1>
           </div>
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 justify-center sm:justify-end w-full sm:w-auto">
           {session && (
             <Link href="/dashboard" className="text-white font-bold">
               ダッシュボード

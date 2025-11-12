@@ -24,7 +24,11 @@ export default function getProxyFlags(proxyPaths: string[], method: string) {
       setJwtFlag = true;
       break;
 
-    case path.startsWith("orders"):
+    case path.startsWith("orders") && method === "GET":
+      setJwtFlag = true;
+      break;
+
+    case path.startsWith("shop/orders") && method === "GET":
       setJwtFlag = true;
       break;
 

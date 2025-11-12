@@ -28,18 +28,18 @@ export default async function ShopPage(props: {
             </Link>
           </Button>
         </div>
-        <div className="w-[240px] mx-auto pt-8">
+        <div className="mx-auto pt-8 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 relative">
           {shop?.icon_url && (
             <Image
               src={shop?.icon_url}
               alt={shop?.name}
-              width={240}
-              height={240}
-              className="rounded-full shrink-0"
+              fill
+              sizes="(max-width: 640px) 8rem, (max-width: 768px) 10rem, 12rem"
+              className="rounded-full object-cover"
             />
           )}
         </div>
-        <div className="w-[720px] mx-auto py-8">
+        <div className="max-w-3xl w-full mx-auto py-8 px-2 sm:px-0">
           <p className="whitespace-pre-wrap">{shop?.description}</p>
         </div>
       </div>

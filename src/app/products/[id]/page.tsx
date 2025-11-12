@@ -30,8 +30,6 @@ export default async function ShopProductsShowPage({
   const shop = JSON.parse(decodeURIComponent(cookie ?? "{}")).shop;
   const isOwner = product.shop_id === shop?.id;
 
-  
-  
   return (
     <div>
       <ShopHeader
@@ -40,15 +38,18 @@ export default async function ShopProductsShowPage({
       />
       <div className="py-8 inner">
         <PageTitle title={product?.name} />
-        <div className="mt-4 w-[660px] mx-auto">
-          <div className="flex justify-between">
-            <Image
-              src={product?.image_url}
-              alt={product?.name}
-              width={320}
-              height={320}
-            />
-            <div className="w-[320px] flex flex-col gap-4 justify-center">
+        <div className="mt-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+            <figure className="w-full aspect-square relative overflow-hidden">
+              <Image
+                src={product?.image_url}
+                alt={product?.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </figure>
+            <div className="w-full flex flex-col gap-4 justify-center">
               <div className="flex gap-1">
                 ショップ:
                 <Link href={`/shops/${product?.shop_id}/profile`}>
@@ -58,19 +59,15 @@ export default async function ShopProductsShowPage({
               <p>税込価格:{product?.price_including_tax_cents}円</p>
               {isOwner && (
                 <>
-                 <Button asChild>
-                 <Link
-                   href={`/dashboard/shop/products/${product.id}/edit`}
-                 >
-                   <span className="font-bold">編集する</span>
-                 </Link>
-                </Button>
-                <DeleteProduct id={product.id} />
+                  <Button asChild>
+                    <Link href={`/dashboard/shop/products/${product.id}/edit`}>
+                      <span className="font-bold">編集する</span>
+                    </Link>
+                  </Button>
+                  <DeleteProduct id={product.id} />
                 </>
               )}
-              {!isOwner && (
-                <ProductAddToCartForm product={product} />
-              )}
+              {!isOwner && <ProductAddToCartForm product={product} />}
             </div>
           </div>
           <p className="mt-4">{product?.description}</p>

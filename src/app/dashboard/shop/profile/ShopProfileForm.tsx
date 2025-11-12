@@ -19,7 +19,11 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-export default function ProfileForm({ loginData }: { loginData: LoginDataType }) {
+export default function ProfileForm({
+  loginData,
+}: {
+  loginData: LoginDataType;
+}) {
   const shop = loginData?.shop;
   const router = useRouter();
 
@@ -70,7 +74,7 @@ export default function ProfileForm({ loginData }: { loginData: LoginDataType })
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-3xl mx-auto p-4 flex flex-col gap-6"
+      className="max-w-3xl w-full mx-auto p-4 flex flex-col gap-6"
     >
       <div className="flex flex-col gap-1">
         <label htmlFor="name" className="font-bold">

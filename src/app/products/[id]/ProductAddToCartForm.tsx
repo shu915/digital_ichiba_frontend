@@ -30,7 +30,9 @@ export default function ProductAddToCartForm({
     const storedShopId = (cartShopIdRaw ?? "").toString().trim();
     const currentShopId = String(product.shop_id ?? "").trim();
     if (cart.length > 0 && storedShopId && storedShopId !== currentShopId) {
-      toast.error("カートには同じショップの商品だけを入れられます。カートを空にしてください。");
+      toast.error(
+        "カートには同じショップの商品だけを入れられます。カートを空にしてください。"
+      );
       return;
     }
 
@@ -62,25 +64,26 @@ export default function ProductAddToCartForm({
   };
 
   return (
-    <div>
-      <Select
-        onValueChange={(value) => setQuantity(Number(value))}
-        defaultValue="1"
-      >
-        <SelectTrigger>
-          <SelectValue placeholder="個数を選択" />
-        </SelectTrigger>
-        <SelectContent>
-          {Array.from({ length: 10 }, (_, i) => (
-            <SelectItem key={i} value={(i + 1).toString()}>
-              {i + 1}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      <Button onClick={addProductToCart} className="mt-4">
-        <span className="font-bold">カートに入れる</span>
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+      <div className="min-w-[160px]">
+        <Select
+          onValueChange={(value) => setQuantity(Number(value))}
+          defaultValue="1"
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="個数を選択" />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: 10 }, (_, i) => (
+              <SelectItem key={i} value={(i + 1).toString()}>
+                {i + 1}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <Button onClick={addProductToCart} className="font-bold">
+        カートに入れる
       </Button>
     </div>
   );
