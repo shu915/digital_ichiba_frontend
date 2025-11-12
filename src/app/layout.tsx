@@ -18,6 +18,22 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Digital Ichiba",
   description: "Digital Ichiba",
+  metadataBase: new URL(process.env.NEXT_URL || "http://localhost:3000"),
+  openGraph: {
+    title: "Digital Ichiba",
+    description: "5分で始めるセレクトショップのためのECプラットフォーム",
+    type: "website",
+    url: "/",
+    images: ["/opengraph-image"],
+    siteName: "Digital Ichiba",
+    locale: "ja_JP",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Digital Ichiba",
+    description: "5分で始めるセレクトショップのためのECプラットフォーム",
+    images: ["/opengraph-image"],
+  },
   icons: {
     icon: "/images/favicon.png",
   },
@@ -34,7 +50,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased  flex flex-col min-h-[100svh]`}
       >
         <Header />
-          <main className="flex-1 flex flex-col">{children}</main>
+        <main className="flex-1 flex flex-col">{children}</main>
         <Footer />
         <Toaster richColors position="top-center" />
       </body>
