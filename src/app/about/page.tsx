@@ -24,7 +24,7 @@ export default function AboutPage() {
             <h3 className="font-bold mb-2">フロントエンド</h3>
             <ul className="list-disc pl-5 space-y-1">
               <li>TypeScript 5.9.2</li>
-              <li>React 19.1.0</li>
+              <li>React 19.16</li>
               <li>Next.js 15.5.0</li>
               <li>Auth.js 5.0.0-beta.29</li>
               <li>TailwindCSS 4.1.12</li>
