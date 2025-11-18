@@ -16,7 +16,7 @@ export default function ShopListItem({
   return (
     <div className="border rounded p-4 hover:bg-muted/40 transition h-full">
       <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-4">
-        <div className="shrink-0">
+        <figure className="shrink-0 w-14 h-14 rounded-full overflow-hidden">
           {/* eslint-disable @next/next/no-img-element */}
           {icon_url ? (
             <img
@@ -27,7 +27,7 @@ export default function ShopListItem({
           ) : (
             <div className="w-14 h-14 rounded-full bg-muted" />
           )}
-        </div>
+        </figure>
         <div className="min-w-0 grow text-center sm:text-left">
           <p className="font-bold text-lg truncate">{name}</p>
           {description && (
