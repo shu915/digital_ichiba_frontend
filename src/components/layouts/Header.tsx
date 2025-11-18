@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Quicksand } from "next/font/google";
 import { auth } from "@/auth";
@@ -18,12 +17,13 @@ export default async function Header() {
       <div className="w-7xl mx-auto max-w-full flex flex-wrap justify-between items-center gap-y-3 p-4">
         <Link href="/">
           <div className="flex items-center gap-2">
-            <figure className="mt-1.5">
-              <Image
+            <figure className="mt-1.5 w-7 h-7">
+              {/* eslint-disable @next/next/no-img-element */}
+              <img
                 src="/images/tag.svg"
                 alt="Digital Ichiba"
-                width={28}
-                height={28}
+                className="w-full h-full"
+                decoding="async"
               />
             </figure>
             <h1

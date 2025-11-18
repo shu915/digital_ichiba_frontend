@@ -1,5 +1,4 @@
 import ShopType from "@/types/shop";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ShopHeader from "@/components/atoms/ShopHeader";
@@ -28,17 +27,20 @@ export default async function ShopPage(props: {
             </Link>
           </Button>
         </div>
-        <div className="mx-auto pt-8 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 relative">
+        <figure className="mx-auto pt-8 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full overflow-hidden">
           {shop?.icon_url && (
-            <Image
-              src={shop?.icon_url}
-              alt={shop?.name}
-              fill
-              sizes="(max-width: 640px) 8rem, (max-width: 768px) 10rem, 12rem"
-              className="rounded-full object-cover"
-            />
+            <>
+              {/* eslint-disable @next/next/no-img-element */}
+              <img
+                src={shop.icon_url}
+                alt={shop.name}
+                className="w-full h-full object-cover"
+                decoding="async"
+                referrerPolicy="no-referrer"
+              />
+            </>
           )}
-        </div>
+        </figure>
         <div className="max-w-3xl w-full mx-auto py-8 px-2 sm:px-0">
           <p className="whitespace-pre-wrap">{shop?.description}</p>
         </div>
