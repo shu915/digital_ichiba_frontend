@@ -7,7 +7,7 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       provider?: "google" | "email" | undefined;
-      provider_subject?: string | null | undefined;
+      provider_subject?: string | undefined;
     };
   }
 }
@@ -15,6 +15,6 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     provider?: "google" | "email" | undefined;
-    provider_subject?: string | null | undefined;
+    provider_subject?: string | undefined;
   }
 }
