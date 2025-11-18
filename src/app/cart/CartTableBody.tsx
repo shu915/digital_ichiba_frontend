@@ -1,5 +1,4 @@
 import ProductType from "@/types/product";
-import Image from "next/image";
 
 export default function CartTableBody({
   products,
@@ -15,13 +14,16 @@ export default function CartTableBody({
         return (
           <tr key={product.id} className="border-b align-middle">
             <td className="p-2 text-center">
-              <Image
-                src={product.image_url}
-                alt={product.name}
-                width={64}
-                height={64}
-                className="mx-auto rounded object-cover"
-              />
+              <figure className="mx-auto w-16 h-16 rounded overflow-hidden">
+                {/* eslint-disable @next/next/no-img-element */}
+                <img
+                  src={product.image_url}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
+              </figure>
             </td>
             <td className="p-2">{product.name}</td>
             <td className="p-2">{product.price_including_tax_cents}円</td>

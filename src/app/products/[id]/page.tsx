@@ -1,6 +1,5 @@
 import ProductType from "@/types/product";
 import PageTitle from "@/components/atoms/PageTitle";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProductAddToCartForm from "./ProductAddToCartForm";
