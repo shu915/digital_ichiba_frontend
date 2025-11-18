@@ -1,5 +1,4 @@
 import ProductType from "@/types/product";
-import type { Metadata } from "next";
 import PageTitle from "@/components/atoms/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +8,6 @@ import ShopHeader from "@/components/atoms/ShopHeader";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
 import DeleteProduct from "./DeleteProduct";
-import ShareButtons from "./ShareButtons";
 
 export default async function ShopProductsShowPage({
   params,
@@ -70,7 +68,6 @@ export default async function ShopProductsShowPage({
                 </>
               )}
               {!isOwner && <ProductAddToCartForm product={product} />}
-              <ShareButtons title={product.name} />
             </div>
           </div>
           <p className="mt-4">{product?.description}</p>
@@ -78,49 +75,4 @@ export default async function ShopProductsShowPage({
       </div>
     </div>
   );
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
-  const { id } = await params;
-  const baseUrl = process.env.NEXT_URL || "http://localhost:3000";
-  try {
-    const res = await fetch(`${baseUrl}/api/products/${id}`, {
-      cache: "no-store",
-    });
-    if (res.ok) {
-      const data = await res.json();
-      const product: ProductType | undefined = data.product;
-      if (product) {
-        return {
-          title: product.name,
-          description: product.description || "Digital Ichiba",
-          openGraph: {
-            title: product.name,
-            description: product.description || "Digital Ichiba",
-            images: [`/products/${id}/opengraph-image`],
-            url: `/products/${id}`,
-          },
-          twitter: {
-            card: "summary_large_image",
-            title: product.name,
-            description: product.description || "Digital Ichiba",
-            images: [`/products/${id}/opengraph-image`],
-          },
-        };
-      }
-    }
-  } catch {}
-  return {
-    openGraph: {
-      images: [`/products/${id}/opengraph-image`],
-    },
-    twitter: {
-      card: "summary_large_image",
-      images: [`/products/${id}/opengraph-image`],
-    },
-  };
 }
