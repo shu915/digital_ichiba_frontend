@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const email = session?.user?.email;
   if (!email) return NextResponse.redirect(new URL("/", request.url));
 
-  const backendJwt = await createBackendJwtFromRequest(request);
+  const backendJwt = await createBackendJwtFromRequest();
 
   const backendRes = await fetch(`${process.env.RAILS_URL}/api/login`, {
     method: "POST",
