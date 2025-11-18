@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 export default function ShopListItem({
@@ -18,12 +17,11 @@ export default function ShopListItem({
     <div className="border rounded p-4 hover:bg-muted/40 transition h-full">
       <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-4">
         <div className="shrink-0">
+          {/* eslint-disable @next/next/no-img-element */}
           {icon_url ? (
-            <Image
+            <img
               src={icon_url}
               alt={name}
-              width={56}
-              height={56}
               className="rounded-full object-cover"
             />
           ) : (

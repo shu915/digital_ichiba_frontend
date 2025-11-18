@@ -41,6 +41,7 @@ export default async function ShopProductsShowPage({
         <div className="mt-4 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             <figure className="w-full aspect-square relative overflow-hidden">
+              {/* eslint-disable @next/next/no-img-element */}
               <img
                 src={product?.image_url}
                 alt={product?.name}
