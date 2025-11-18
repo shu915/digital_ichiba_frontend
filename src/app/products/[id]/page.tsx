@@ -41,12 +41,10 @@ export default async function ShopProductsShowPage({
         <div className="mt-4 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             <figure className="w-full aspect-square relative overflow-hidden">
-              <Image
+              <img
                 src={product?.image_url}
                 alt={product?.name}
-                fill
                 className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
               />
             </figure>
             <div className="w-full flex flex-col gap-4 justify-center">

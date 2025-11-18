@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         port: '3000', // Rails が立ってるポート
         pathname: '/rails/active_storage/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.aws-training-shu.com',
+        pathname: '/rails/active_storage/**',
+      },
     ],
   },
 };
