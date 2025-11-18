@@ -32,7 +32,7 @@ export default async function handleProxyRequest(
     }
 
     if (setJwtFlag) {
-      const jwt = await createBackendJwtFromRequest(request);
+      const jwt = await createBackendJwtFromRequest();
       headers.set("Authorization", `Bearer ${jwt}`);
     }
 
