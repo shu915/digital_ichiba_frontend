@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { auth, signOut } from "@/auth";
-import createBackendJwtFromRequest from "@/lib/createBackendJwtFromRequest";
+import createBackendJwtFromSession from "@/lib/createBackendJwtFromSession";
 
 export async function GET(request: Request) {
   const session = await auth();
   const email = session?.user?.email;
   if (!email) return NextResponse.redirect(new URL("/", request.url));
 
-  const backendJwt = await createBackendJwtFromRequest();
+  const backendJwt = await createBackendJwtFromSession();
 
   const backendRes = await fetch(`${process.env.RAILS_URL}/api/login`, {
     method: "POST",
