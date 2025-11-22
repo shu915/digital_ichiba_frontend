@@ -1,9 +1,10 @@
 "use client";
-import PageTitle from "@/components/atoms/PageTitle";
+
 import { useState, useEffect } from "react";
 import CartItemType from "@/types/cartItem";
 import ProductType from "@/types/product";
 import { Button } from "@/components/ui/button";
+import PageTitle from "@/components/atoms/PageTitle";
 import ShopHeader from "@/components/atoms/ShopHeader";
 import CartTableBody from "./CartTableBody";
 import CheckoutButton from "./CheckoutButton";
@@ -98,7 +99,7 @@ export default function CartPage() {
               <tfoot>
                 <tr className="border-t">
                   <td className="p-2 text-right font-bold" colSpan={4}>
-                    小計
+                    小計の合計
                   </td>
                   <td className="p-2 font-bold">{totalCents}円</td>
                 </tr>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import getProxyFlags from "@/lib/getProxyFlags";
-import createBackendJwtFromRequest from "@/lib/createBackendJwtFromRequest";
+import createBackendJwtFromSession from "@/lib/createBackendJwtFromSession";
 
 export default async function handleProxyRequest(
   request: NextRequest,
@@ -8,10 +8,7 @@ export default async function handleProxyRequest(
   method: string
 ) {
   try {
-    const { setJwtFlag, setCookieFlag } = getProxyFlags(
-      proxyPaths,
-      method
-    );
+    const { setJwtFlag, setCookieFlag } = getProxyFlags(proxyPaths, method);
     const endpoint = `/${proxyPaths.join("/")}`;
     const url = new URL(request.url);
     const apiUrl = `${process.env.RAILS_URL}/api${endpoint}${url.search}`;
@@ -32,7 +29,7 @@ export default async function handleProxyRequest(
     }
 
     if (setJwtFlag) {
-      const jwt = await createBackendJwtFromRequest();
+      const jwt = await createBackendJwtFromSession();
       headers.set("Authorization", `Bearer ${jwt}`);
     }
 
