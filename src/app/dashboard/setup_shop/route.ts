@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import handleProxyRequest from "@/lib/handleProxyRequest";
-import { requireAuth } from "@/lib/requireAuth";
+import requireAuth from "@/lib/requireAuth";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
 
 export async function POST(request: NextRequest) {

@@ -7,13 +7,97 @@ import ShopHeader from "@/components/atoms/ShopHeader";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
 import DeleteProduct from "./DeleteProduct";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const { id } = params;
+  try {
+    const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
+      method: "GET",
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      return {
+        title: "商品が見つかりませんでした",
+        description: "指定された商品は存在しません。",
+        openGraph: {
+          title: "商品が見つかりませんでした",
+          description: "指定された商品は存在しません。",
+          url: `${process.env.NEXT_URL}/products/${id}`,
+          type: "website",
+        },
+        twitter: {
+          card: "summary_large_image",
+        },
+      };
+    }
+    const data = await res.json();
+    const product: ProductType | undefined = data.product;
+    if (!product) {
+      return {
+        title: "商品が見つかりませんでした",
+        description: "指定された商品は存在しません。",
+        twitter: { card: "summary_large_image" },
+        openGraph: {
+          title: "商品が見つかりませんでした",
+          description: "指定された商品は存在しません。",
+          url: `${process.env.NEXT_URL}/products/${id}`,
+          type: "website",
+        },
+      };
+    }
+    const title = `${product.name} | ${product.shop_name}`;
+    const description =
+      product.description?.slice(0, 120) ?? `${product.name} の商品ページ`;
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url: `${process.env.NEXT_URL}/products/${id}`,
+        type: "website",
+        images: [
+          {
+            // Next.js が自動配信する動的OG画像ルート（本ファイルと同階層の opengraph-image.tsx）
+            url: `/products/${id}/opengraph-image`,
+            width: 1200,
+            height: 630,
+            alt: product.name,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [`/products/${id}/opengraph-image`],
+      },
+    };
+  } catch {
+    return {
+      title: "エラーが発生しました",
+      description: "ページ情報の取得に失敗しました。",
+      twitter: { card: "summary_large_image" },
+      openGraph: {
+        title: "エラーが発生しました",
+        description: "ページ情報の取得に失敗しました。",
+        type: "website",
+      },
+    };
+  }
+}
 
 export default async function ShopProductsShowPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
   const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
     method: "GET",
     cache: "no-store",

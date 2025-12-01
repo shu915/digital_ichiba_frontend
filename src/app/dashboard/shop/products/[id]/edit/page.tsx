@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { requireAuth } from "@/lib/requireAuth";
+import requireAuth from "@/lib/requireAuth";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
 import PageTitle from "@/components/atoms/PageTitle";
 import ShopProductForm from "@/components/organisms/ShopProductForm";

@@ -1,13 +1,19 @@
 import { NextResponse, NextRequest } from "next/server";
-import { requireAuth } from "@/lib/requireAuth";
+import requireAuth from "@/lib/requireAuth";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
-import handleProxyRequest from "@/lib/handleProxyRequest";
 
 export async function GET(request: NextRequest) {
   await requireAuth();
   await requireShopOrAdmin();
 
-  const res = await handleProxyRequest(request, ["shop"], "GET");
+  const res = await fetch(`${process.env.NEXT_URL}/api/shop`, {
+    method: "GET",
+    headers: {
+      cookie: request.headers.get("cookie") ?? "",
+    },
+    cache: "no-store",
+  });
+
   const redirect = NextResponse.redirect(
     new URL("/dashboard/shop", request.url)
   );
