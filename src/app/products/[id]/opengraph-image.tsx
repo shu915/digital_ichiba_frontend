@@ -5,8 +5,6 @@ export const runtime = "edge";
 export const contentType = "image/png";
 export const size = { width: 1200, height: 630 };
 
-
-
 export default async function OgImage({
   params,
 }: {
@@ -40,7 +38,13 @@ export default async function OgImage({
     product?.image_url && product.image_url.startsWith("http")
       ? product.image_url
       : product?.image_url
-      ? `${process.env.NEXT_URL}${product.image_url}`
+      ? `${process.env.RAILS_URL}${product.image_url}`
+      : undefined;
+  const proxiedUrl =
+    imageUrl != null
+      ? `${process.env.NEXT_URL}/api/og-image-source?url=${encodeURIComponent(
+          imageUrl
+        )}`
       : undefined;
 
   return new ImageResponse(
@@ -94,7 +98,7 @@ export default async function OgImage({
           </div>
         </div>
 
-        {imageUrl && (
+        {proxiedUrl && (
           <div
             style={{
               width: 500,
@@ -109,7 +113,7 @@ export default async function OgImage({
             }}
           >
             <img
-              src={imageUrl}
+              src={proxiedUrl}
               width={500}
               height={500}
               alt={title}
