@@ -12,9 +12,9 @@ import type { Metadata } from "next";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const { id } = params;
+  const { id } = await params;
   try {
     const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
       method: "GET",
@@ -95,9 +95,9 @@ export async function generateMetadata({
 export default async function ShopProductsShowPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
   const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
     method: "GET",
     cache: "no-store",
