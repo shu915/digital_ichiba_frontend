@@ -1,17 +1,11 @@
 import { ImageResponse } from "next/og";
+import ProductType from "@/types/product";
 
 export const runtime = "edge";
 export const contentType = "image/png";
 export const size = { width: 1200, height: 630 };
 
-type Product = {
-  id: string;
-  name: string;
-  description?: string;
-  shop_name: string;
-  image_url?: string;
-  price_including_tax_cents?: number;
-};
+
 
 export default async function OgImage({
   params,
@@ -20,14 +14,13 @@ export default async function OgImage({
 }) {
   const { id } = await params;
 
-  let product: Product | null = null;
+  let product: ProductType | null = null;
   try {
-    // 直接バックエンドへ（公開到達可能なHTTPSであること）
-    const res = await fetch(`${process.env.RAILS_URL}/api/products/${id}`, {
+    const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
       cache: "no-store",
     });
     if (res.ok) {
-      const data = (await res.json()) as { product?: Product };
+      const data = (await res.json()) as { product?: ProductType };
       product = data.product ?? null;
     }
   } catch {
@@ -43,12 +36,11 @@ export default async function OgImage({
   const description =
     product?.description?.slice(0, 120) ?? "デジタル市場のプロダクトページ";
 
-  // 画像は絶対URLのみ使用
   const imageUrl =
     product?.image_url && product.image_url.startsWith("http")
       ? product.image_url
       : product?.image_url
-      ? `${process.env.RAILS_URL}${product.image_url}`
+      ? `${process.env.NEXT_URL}${product.image_url}`
       : undefined;
 
   return new ImageResponse(
