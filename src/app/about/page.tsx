@@ -9,6 +9,7 @@ export default function AboutPage() {
         <h2 className="text-xl font-bold">概要</h2>
         <p className="leading-7">
           このサイトはShuのHappiness Chainの卒業ポートフォリオです。
+          Stripeがテストモードになっているので、実際に決済ができません。
         </p>
         <p className="leading-7">
           Digital

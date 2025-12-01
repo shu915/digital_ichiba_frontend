@@ -20,7 +20,7 @@ export default function CartSuccessPage() {
         ご注文が完了しました。ご利用ありがとうございます。
       </p>
       <div className="mt-8 flex justify-center">
-        <Button asChild>
+        <Button asChild className="font-bold">
           <Link href="/">トップへ戻る</Link>
         </Button>
       </div>

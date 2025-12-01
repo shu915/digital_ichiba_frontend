@@ -1,4 +1,4 @@
-import { requireAuth } from "@/lib/requireAuth";
+import requireAuth from "@/lib/requireAuth";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";

@@ -1,19 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useEffect } from "react";
 
-export default function StripeButton({
-  stripe_status,
-}: {
-  stripe_status?: string;
-}) {
-  useEffect(() => {
-    if (stripe_status === "success") toast.success("Stripe連携成功");
-    if (stripe_status === "retry") toast.error("Stripe連携に失敗しました");
-  }, [stripe_status]);
-
+export default function StripeButton() {
   return (
     <Button
       className="w-full sm:w-auto"

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ShopProfileForm from "./ShopProfileForm";
-import { requireAuth } from "@/lib/requireAuth";
+import requireAuth from "@/lib/requireAuth";
 import requireShopOrAdmin from "@/lib/requireShopOrAdmin";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
