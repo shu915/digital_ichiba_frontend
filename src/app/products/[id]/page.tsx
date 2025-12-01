@@ -53,13 +53,7 @@ export async function generateMetadata({
     const title = `${product.name} | ${product.shop_name}`;
     const description =
       product.description?.slice(0, 120) ?? `${product.name} の商品ページ`;
-    // OGP用の画像は「外部から到達できる絶対URL」にする
-    // 相対パスの場合はAPIサーバ（RAILS_URL）配下のURLとして解決する
-    const imageUrl =
-      typeof product.image_url === "string" &&
-      product.image_url.startsWith("http")
-        ? product.image_url
-        : `${process.env.RAILS_URL}${product.image_url ?? ""}`;
+    // OGP画像は動的エンドポイントで生成するため、ここで商品画像URLは使用しない
     return {
       title,
       description,
@@ -70,7 +64,10 @@ export async function generateMetadata({
         type: "website",
         images: [
           {
-            url: imageUrl,
+            // 動的生成のOG画像（絶対URL）
+            url: `${process.env.NEXT_URL}/products/${id}/opengraph-image`,
+            width: 1200,
+            height: 630,
             alt: product.name,
           },
         ],
@@ -79,7 +76,7 @@ export async function generateMetadata({
         card: "summary_large_image",
         title,
         description,
-        images: [imageUrl],
+        images: [`${process.env.NEXT_URL}/products/${id}/opengraph-image`],
       },
     };
   } catch {
