@@ -53,11 +53,13 @@ export async function generateMetadata({
     const title = `${product.name} | ${product.shop_name}`;
     const description =
       product.description?.slice(0, 120) ?? `${product.name} の商品ページ`;
+    // OGP用の画像は「外部から到達できる絶対URL」にする
+    // 相対パスの場合はAPIサーバ（RAILS_URL）配下のURLとして解決する
     const imageUrl =
       typeof product.image_url === "string" &&
       product.image_url.startsWith("http")
         ? product.image_url
-        : `${process.env.NEXT_URL}${product.image_url ?? ""}`;
+        : `${process.env.RAILS_URL}${product.image_url ?? ""}`;
     return {
       title,
       description,
