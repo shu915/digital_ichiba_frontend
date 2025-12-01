@@ -53,6 +53,11 @@ export async function generateMetadata({
     const title = `${product.name} | ${product.shop_name}`;
     const description =
       product.description?.slice(0, 120) ?? `${product.name} の商品ページ`;
+    const imageUrl =
+      typeof product.image_url === "string" &&
+      product.image_url.startsWith("http")
+        ? product.image_url
+        : `${process.env.NEXT_URL}${product.image_url ?? ""}`;
     return {
       title,
       description,
@@ -63,10 +68,7 @@ export async function generateMetadata({
         type: "website",
         images: [
           {
-            // Next.js が自動配信する動的OG画像ルート（本ファイルと同階層の opengraph-image.tsx）
-            url: `/products/${id}/opengraph-image`,
-            width: 1200,
-            height: 630,
+            url: imageUrl,
             alt: product.name,
           },
         ],
@@ -75,7 +77,7 @@ export async function generateMetadata({
         card: "summary_large_image",
         title,
         description,
-        images: [`/products/${id}/opengraph-image`],
+        images: [imageUrl],
       },
     };
   } catch {
