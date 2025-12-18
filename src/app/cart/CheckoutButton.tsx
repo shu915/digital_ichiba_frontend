@@ -23,7 +23,7 @@ export default function CheckoutButton() {
       toast.error("カートのショップがありません");
       return;
     }
-    const checkoutRes = await fetch("/api/stripe_checkouts", {
+    const checkoutRes = await fetch("/api/stripe_checkout", {
       method: "POST",
       body: JSON.stringify({
         cart: cart.map((item: CartItemType) => ({

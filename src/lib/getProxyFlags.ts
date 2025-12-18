@@ -32,11 +32,11 @@ export default function getProxyFlags(proxyPaths: string[], method: string) {
       setJwtFlag = true;
       break;
 
-    case path === "stripe_accounts" && method === "POST":
+    case path === "stripe_connect" && method === "POST":
       setJwtFlag = true;
       break;
 
-    case path === "stripe_checkouts" && method === "POST":
+    case path === "stripe_checkout" && method === "POST":
       setJwtFlag = true;
       break;
   }
