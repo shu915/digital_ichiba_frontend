@@ -8,7 +8,7 @@ type ProductType = {
   price_excluding_tax_cents: number;
   price_including_tax_cents: number;
   stock: number;
-  image_url: string;
+  image_url: string | null;
 };
 
 export default ProductType;

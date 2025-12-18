@@ -7,7 +7,51 @@ import ShopHeader from "@/components/atoms/ShopHeader";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
 import DeleteProduct from "./DeleteProduct";
-// OGPのカスタム生成は廃止
+import type { Metadata } from "next";
+import {
+  buildDefaultOgMetadata,
+  fetchJson,
+  railsApiUrl,
+  truncate,
+} from "@/lib/ogMetadata";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+type ProductShowApiResponse = { product?: ProductType };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+
+  const url = railsApiUrl(`/products/${id}`);
+  const data = url ? await fetchJson<ProductShowApiResponse>(url) : null;
+  const product = data?.product;
+
+  if (!product) {
+    return {
+      title: "商品が見つかりません | Digital Ichiba",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = `${product.name} | Digital Ichiba`;
+  const description = truncate(product.description || "Digital Ichiba", 120);
+
+  const ogImageUrl = product.image_url
+    ? `/api/og-image?src=${encodeURIComponent(product.image_url)}`
+    : null;
+
+  return buildDefaultOgMetadata({
+    title,
+    description,
+    path: `/products/${id}`,
+    imageUrl: ogImageUrl,
+  });
+}
 
 export default async function ShopProductsShowPage({
   params,
@@ -41,12 +85,16 @@ export default async function ShopProductsShowPage({
         <div className="mt-4 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             <figure className="w-full aspect-square relative overflow-hidden">
-              {/* eslint-disable @next/next/no-img-element */}
-              <img
-                src={product?.image_url}
-                alt={product?.name}
-                className="object-cover"
-              />
+              {product.image_url && (
+                <>
+                  {/* eslint-disable @next/next/no-img-element */}
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="object-cover"
+                  />
+                </>
+              )}
             </figure>
             <div className="w-full flex flex-col gap-4 justify-center">
               <div className="flex gap-1">

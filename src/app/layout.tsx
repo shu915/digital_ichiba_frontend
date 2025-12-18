@@ -18,7 +18,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Digital Ichiba",
   description: "Digital Ichiba",
-  metadataBase: new URL(process.env.NEXT_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.NEXT_URL ||
+      (process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000")
+  ),
   openGraph: {
     title: "Digital Ichiba",
     description: "5分で始めるセレクトショップのためのECプラットフォーム",
