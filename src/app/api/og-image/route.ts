@@ -4,7 +4,7 @@ import sharp from "sharp";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function transparentPngResponse(params?: { status?: number; error?: string }) {
+function transparentPngResponse(params?: { error?: string }) {
   // 1x1 transparent PNG
   const png = Buffer.from(
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/6X8kqAAAAAASUVORK5CYII=",
@@ -12,13 +12,15 @@ function transparentPngResponse(params?: { status?: number; error?: string }) {
   );
   const headers: Record<string, string> = {
     "content-type": "image/png",
-    "cache-control": "public, max-age=0, s-maxage=300",
+    // 失敗時の画像は短めキャッシュ（原因調査しやすくする）
+    "cache-control": "public, max-age=0, s-maxage=60",
     "access-control-allow-origin": "*",
   };
   if (params?.error) headers["x-di-og-error"] = params.error;
 
   return new NextResponse(new Uint8Array(png), {
-    status: params?.status ?? 200,
+    // OGP/Toolbar用途では「画像URLが200で返る」こと自体が重要なので常に200に寄せる
+    status: 200,
     headers,
   });
 }
@@ -53,19 +55,18 @@ export async function GET(request: NextRequest) {
   const src = request.nextUrl.searchParams.get("src");
   if (!src) {
     // OGP用途なので、画像として返す（Toolbar等でも壊れにくい）
-    return transparentPngResponse({ status: 400, error: "src_required" });
+    return transparentPngResponse({ error: "src_required" });
   }
 
   let url: URL;
   try {
     url = new URL(src);
   } catch {
-    return transparentPngResponse({ status: 400, error: "src_invalid" });
+    return transparentPngResponse({ error: "src_invalid" });
   }
 
   if (!isAllowedHost(url.hostname)) {
     return transparentPngResponse({
-      status: 400,
       error: "src_host_not_allowed",
     });
   }
@@ -80,7 +81,7 @@ export async function GET(request: NextRequest) {
       signal: controller.signal,
     });
     if (!res.ok) {
-      return transparentPngResponse({ status: 502, error: "fetch_failed" });
+      return transparentPngResponse({ error: "fetch_failed" });
     }
 
     const contentType = res.headers.get("content-type");
@@ -89,7 +90,7 @@ export async function GET(request: NextRequest) {
 
     // 想定外の巨大画像は拒否（OGP用途なので過剰サイズは不要）
     if (bytes.length > 6 * 1024 * 1024) {
-      return transparentPngResponse({ status: 413, error: "src_too_large" });
+      return transparentPngResponse({ error: "src_too_large" });
     }
 
     const convert = shouldConvertToPng(contentType, url.pathname);
@@ -117,7 +118,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch {
-    return transparentPngResponse({ status: 500, error: "build_failed" });
+    return transparentPngResponse({ error: "build_failed" });
   } finally {
     clearTimeout(timer);
   }
