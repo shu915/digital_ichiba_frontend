@@ -4,6 +4,25 @@ import sharp from "sharp";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+function transparentPngResponse(params?: { status?: number; error?: string }) {
+  // 1x1 transparent PNG
+  const png = Buffer.from(
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/6X8kqAAAAAASUVORK5CYII=",
+    "base64"
+  );
+  const headers: Record<string, string> = {
+    "content-type": "image/png",
+    "cache-control": "public, max-age=0, s-maxage=300",
+    "access-control-allow-origin": "*",
+  };
+  if (params?.error) headers["x-di-og-error"] = params.error;
+
+  return new NextResponse(new Uint8Array(png), {
+    status: params?.status ?? 200,
+    headers,
+  });
+}
+
 function isAllowedHost(hostname: string) {
   const railsUrl = process.env.RAILS_URL;
   if (railsUrl) {
@@ -33,21 +52,22 @@ function shouldConvertToPng(contentType: string | null, pathname: string) {
 export async function GET(request: NextRequest) {
   const src = request.nextUrl.searchParams.get("src");
   if (!src) {
-    return NextResponse.json({ message: "src is required" }, { status: 400 });
+    // OGP用途なので、画像として返す（Toolbar等でも壊れにくい）
+    return transparentPngResponse({ status: 400, error: "src_required" });
   }
 
   let url: URL;
   try {
     url = new URL(src);
   } catch {
-    return NextResponse.json({ message: "src is invalid" }, { status: 400 });
+    return transparentPngResponse({ status: 400, error: "src_invalid" });
   }
 
   if (!isAllowedHost(url.hostname)) {
-    return NextResponse.json(
-      { message: "src host is not allowed" },
-      { status: 400 }
-    );
+    return transparentPngResponse({
+      status: 400,
+      error: "src_host_not_allowed",
+    });
   }
 
   const controller = new AbortController();
@@ -60,10 +80,7 @@ export async function GET(request: NextRequest) {
       signal: controller.signal,
     });
     if (!res.ok) {
-      return NextResponse.json(
-        { message: "failed to fetch src" },
-        { status: 502 }
-      );
+      return transparentPngResponse({ status: 502, error: "fetch_failed" });
     }
 
     const contentType = res.headers.get("content-type");
@@ -72,10 +89,7 @@ export async function GET(request: NextRequest) {
 
     // 想定外の巨大画像は拒否（OGP用途なので過剰サイズは不要）
     if (bytes.length > 6 * 1024 * 1024) {
-      return NextResponse.json(
-        { message: "src is too large" },
-        { status: 413 }
-      );
+      return transparentPngResponse({ status: 413, error: "src_too_large" });
     }
 
     const convert = shouldConvertToPng(contentType, url.pathname);
@@ -85,6 +99,7 @@ export async function GET(request: NextRequest) {
         headers: {
           "content-type": contentType || "application/octet-stream",
           "cache-control": "public, max-age=0, s-maxage=86400",
+          "access-control-allow-origin": "*",
         },
       });
     }
@@ -98,13 +113,11 @@ export async function GET(request: NextRequest) {
       headers: {
         "content-type": "image/png",
         "cache-control": "public, max-age=0, s-maxage=86400",
+        "access-control-allow-origin": "*",
       },
     });
   } catch {
-    return NextResponse.json(
-      { message: "failed to build og image" },
-      { status: 500 }
-    );
+    return transparentPngResponse({ status: 500, error: "build_failed" });
   } finally {
     clearTimeout(timer);
   }
