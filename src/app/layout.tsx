@@ -18,13 +18,26 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Digital Ichiba",
   description: "Digital Ichiba",
-  metadataBase: new URL(process.env.NEXT_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.NEXT_URL ||
+      (process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000")
+  ),
   openGraph: {
     title: "Digital Ichiba",
     description: "5分で始めるセレクトショップのためのECプラットフォーム",
     type: "website",
     url: "/",
-    images: ["/opengraph-image"],
+    images: [
+      {
+        url: "/images/digital-ichiba_ogp.png",
+        width: 1200,
+        height: 630,
+        alt: "Digital Ichiba",
+      },
+    ],
     siteName: "Digital Ichiba",
     locale: "ja_JP",
   },
@@ -32,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Digital Ichiba",
     description: "5分で始めるセレクトショップのためのECプラットフォーム",
-    images: ["/opengraph-image"],
+    images: ["/images/digital-ichiba_ogp.png"],
   },
   icons: {
     icon: "/images/favicon.png",
