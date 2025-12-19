@@ -5,6 +5,41 @@ import ShopHeader from "@/components/atoms/ShopHeader";
 import PageTitle from "@/components/atoms/PageTitle";
 import { notFound } from "next/navigation";
 import ProductList from "./ProductList";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+
+  const baseTitle = "Digital Ichiba";
+  const res = await fetch(`${process.env.NEXT_URL}/api/shops/${id}`, {
+    cache: "no-store",
+  }).catch(() => null);
+
+  if (!res?.ok) return { title: baseTitle };
+
+  const data = (await res.json().catch(() => null)) as {
+    shop?: ShopType;
+  } | null;
+  const shop = data?.shop;
+  if (!shop) return { title: baseTitle };
+
+  const title = `${shop.name} | ${baseTitle}`;
+  const description = (shop.description ?? baseTitle)
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 120);
+
+  return {
+    title,
+    description,
+    openGraph: { title, description },
+    twitter: { title, description },
+  };
+}
 
 export default async function ShopPage({
   params,

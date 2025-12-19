@@ -7,7 +7,41 @@ import ShopHeader from "@/components/atoms/ShopHeader";
 import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
 import DeleteProduct from "./DeleteProduct";
-// OGPのカスタム生成は廃止
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+
+  const baseTitle = "Digital Ichiba";
+  const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
+    cache: "no-store",
+  }).catch(() => null);
+
+  if (!res?.ok) return { title: baseTitle };
+
+  const data = (await res.json().catch(() => null)) as {
+    product?: ProductType;
+  } | null;
+  const product = data?.product;
+  if (!product) return { title: baseTitle };
+
+  const title = `${product.name} | ${baseTitle}`;
+  const description = (product.description ?? baseTitle)
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 120);
+
+  return {
+    title,
+    description,
+    openGraph: { title, description },
+    twitter: { title, description },
+  };
+}
 
 export default async function ShopProductsShowPage({
   params,
