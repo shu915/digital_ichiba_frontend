@@ -9,29 +9,54 @@ import { Button } from "@/components/ui/button";
 import DeleteProduct from "./DeleteProduct";
 import type { Metadata } from "next";
 
-export async function generateMetadata(
-  {
-    params,
-  }: {
-    params: Promise<{ id: string }>;
-  },
-  parent: Promise<Metadata>
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
   const { id } = await params;
 
   const baseTitle = "Digital Ichiba";
-  const prev = await parent;
+  const ogImage = "/images/digital-ichiba_ogp.png";
+
+  const fallback: Metadata = {
+    title: baseTitle,
+    description: baseTitle,
+    openGraph: {
+      title: baseTitle,
+      description: baseTitle,
+      type: "website",
+      url: `/products/${id}`,
+      siteName: baseTitle,
+      locale: "ja_JP",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: baseTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: baseTitle,
+      description: baseTitle,
+      images: [ogImage],
+    },
+  };
+
   const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
     cache: "no-store",
   }).catch(() => null);
 
-  if (!res?.ok) return prev;
+  if (!res?.ok) return fallback;
 
   const data = (await res.json().catch(() => null)) as {
     product?: ProductType;
   } | null;
   const product = data?.product;
-  if (!product) return prev;
+  if (!product) return fallback;
 
   const title = `${product.name} | ${baseTitle}`;
   const description = (product.description ?? baseTitle)
@@ -40,19 +65,29 @@ export async function generateMetadata(
     .slice(0, 120);
 
   return {
-    ...prev,
     title,
     description,
     openGraph: {
-      ...(prev.openGraph ?? {}),
       title,
       description,
+      type: "website",
       url: `/products/${id}`,
+      siteName: baseTitle,
+      locale: "ja_JP",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: baseTitle,
+        },
+      ],
     },
     twitter: {
-      ...(prev.twitter ?? {}),
+      card: "summary_large_image",
       title,
       description,
+      images: [ogImage],
     },
   };
 }
