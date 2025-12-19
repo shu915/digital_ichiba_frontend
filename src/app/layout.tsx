@@ -29,10 +29,7 @@ export const metadata: Metadata = {
         ? `https://${process.env.VERCEL_URL}`
         : "http://localhost:3000")
   ),
-  icons: {
-    icon: "/images/favicon.png",
-  },
-};
+}
 
 export default function RootLayout({
   children,
