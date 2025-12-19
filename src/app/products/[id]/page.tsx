@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
 import DeleteProduct from "./DeleteProduct";
 import type { Metadata } from "next";
+import { buildOgpMetadata, OGP_SITE_NAME, truncateText } from "@/lib/ogp";
 
 export async function generateMetadata({
   params,
@@ -16,35 +17,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
 
-  const baseTitle = "Digital Ichiba";
-  const ogImage = "/images/digital-ichiba_ogp.png";
-
-  const fallback: Metadata = {
-    title: baseTitle,
-    description: baseTitle,
-    openGraph: {
-      title: baseTitle,
-      description: baseTitle,
-      type: "website",
-      url: `/products/${id}`,
-      siteName: baseTitle,
-      locale: "ja_JP",
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: baseTitle,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: baseTitle,
-      description: baseTitle,
-      images: [ogImage],
-    },
-  };
+  const fallback = buildOgpMetadata({
+    title: OGP_SITE_NAME,
+    description: OGP_SITE_NAME,
+    url: `/products/${id}`,
+  });
 
   const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
     cache: "no-store",
@@ -58,38 +35,9 @@ export async function generateMetadata({
   const product = data?.product;
   if (!product) return fallback;
 
-  const title = `${product.name} | ${baseTitle}`;
-  const description = (product.description ?? baseTitle)
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, 120);
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      url: `/products/${id}`,
-      siteName: baseTitle,
-      locale: "ja_JP",
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: baseTitle,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+  const title = `${product.name} | ${OGP_SITE_NAME}`;
+  const description = truncateText(product.description ?? OGP_SITE_NAME, 120);
+  return buildOgpMetadata({ title, description, url: `/products/${id}` });
 }
 
 export default async function ShopProductsShowPage({
