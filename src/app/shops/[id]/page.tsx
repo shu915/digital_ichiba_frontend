@@ -7,25 +7,29 @@ import { notFound } from "next/navigation";
 import ProductList from "./ProductList";
 import type { Metadata } from "next";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: Promise<{ id: string }>;
+  },
+  parent: Promise<Metadata>
+): Promise<Metadata> {
   const { id } = await params;
 
   const baseTitle = "Digital Ichiba";
+  const prev = await parent;
   const res = await fetch(`${process.env.NEXT_URL}/api/shops/${id}`, {
     cache: "no-store",
   }).catch(() => null);
 
-  if (!res?.ok) return { title: baseTitle };
+  if (!res?.ok) return prev;
 
   const data = (await res.json().catch(() => null)) as {
     shop?: ShopType;
   } | null;
   const shop = data?.shop;
-  if (!shop) return { title: baseTitle };
+  if (!shop) return prev;
 
   const title = `${shop.name} | ${baseTitle}`;
   const description = (shop.description ?? baseTitle)
@@ -34,10 +38,20 @@ export async function generateMetadata({
     .slice(0, 120);
 
   return {
+    ...prev,
     title,
     description,
-    openGraph: { title, description },
-    twitter: { title, description },
+    openGraph: {
+      ...(prev.openGraph ?? {}),
+      title,
+      description,
+      url: `/shops/${id}`,
+    },
+    twitter: {
+      ...(prev.twitter ?? {}),
+      title,
+      description,
+    },
   };
 }
 

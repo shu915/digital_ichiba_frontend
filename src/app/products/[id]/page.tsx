@@ -9,25 +9,29 @@ import { Button } from "@/components/ui/button";
 import DeleteProduct from "./DeleteProduct";
 import type { Metadata } from "next";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata(
+  {
+    params,
+  }: {
+    params: Promise<{ id: string }>;
+  },
+  parent: Promise<Metadata>
+): Promise<Metadata> {
   const { id } = await params;
 
   const baseTitle = "Digital Ichiba";
+  const prev = await parent;
   const res = await fetch(`${process.env.NEXT_URL}/api/products/${id}`, {
     cache: "no-store",
   }).catch(() => null);
 
-  if (!res?.ok) return { title: baseTitle };
+  if (!res?.ok) return prev;
 
   const data = (await res.json().catch(() => null)) as {
     product?: ProductType;
   } | null;
   const product = data?.product;
-  if (!product) return { title: baseTitle };
+  if (!product) return prev;
 
   const title = `${product.name} | ${baseTitle}`;
   const description = (product.description ?? baseTitle)
@@ -36,10 +40,20 @@ export async function generateMetadata({
     .slice(0, 120);
 
   return {
+    ...prev,
     title,
     description,
-    openGraph: { title, description },
-    twitter: { title, description },
+    openGraph: {
+      ...(prev.openGraph ?? {}),
+      title,
+      description,
+      url: `/products/${id}`,
+    },
+    twitter: {
+      ...(prev.twitter ?? {}),
+      title,
+      description,
+    },
   };
 }
 
