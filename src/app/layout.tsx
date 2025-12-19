@@ -4,6 +4,7 @@ import "./global.css";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { buildOgpMetadata, OGP_SITE_NAME } from "@/lib/ogp";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +29,7 @@ export const metadata: Metadata = {
         ? `https://${process.env.VERCEL_URL}`
         : "http://localhost:3000")
   ),
-  icons: {
-    icon: "/images/favicon.png",
-  },
-};
+}
 
 export default function RootLayout({
   children,
