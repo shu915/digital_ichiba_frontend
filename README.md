@@ -25,5 +25,43 @@ Docker 28.4.0
 
 ## Setup
 ```
+npm install
 npm run dev
 ```
+
+## 認証フロー
+
+![認証フロー](docs/nextjs_rails_auth_architecture.webp)
+
+## 環境変数
+
+開発では、以下を設定してください。
+
+```bash
+# フロント（Next.js）のURL
+NEXT_URL=http://localhost:3001
+
+# バックエンド（Rails API）のURL
+RAILS_URL=http://localhost:3000
+
+# Auth.js（NextAuth）用：セッション暗号化・署名に使用（ランダムな長い文字列）
+AUTH_SECRET=your-random-secret
+
+# Auth.js（NextAuth）用：このフロントのURL（コールバックURL生成に使用）
+AUTH_URL=http://localhost:3001
+
+# Google OAuth（GCPのOAuthクライアント）
+AUTH_GOOGLE_ID=xxxx.apps.googleusercontent.com
+AUTH_GOOGLE_SECRET=xxxx
+
+# Rails向けJWT署名用の秘密鍵（PKCS8/PEM, 改行は \\n）
+# ※Rails側には対応する公開鍵を設定して検証します
+APP_JWT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
+```
+
+### ざっくり用途
+- **`NEXT_URL`**: サーバー側fetchのベースURL（Next内部の `/api/...` 呼び出しに使用）
+- **`RAILS_URL`**: NextのAPIプロキシがRailsへ転送するときのベースURL
+- **`AUTH_SECRET` / `AUTH_URL`**: Auth.js（NextAuth）の動作に必須
+- **`AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET`**: Googleログイン用
+- **`APP_JWT_PRIVATE_KEY`**: Next→Rails API通信で使うJWTの署名用（`src/lib/createBackendJwt.ts`）
