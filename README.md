@@ -4,7 +4,7 @@
 
 ## 概要
 Digital Ichibaは、ハンドメイド作家や衣料品、雑貨、生活用品などの小規模セレクトショップのオーナー向けに、
-SNSと直結して5分でオンラインショップを開設できるECプラットフォームです。
+5分でオンラインショップを開設できるECプラットフォームです。
 シングルページアプリケーション（SPA）によるスムーズな操作性と、Stripeによる信頼性の高い決済機能を搭載。
 在庫管理やモバイル最適化も完備し、日常の投稿からそのまま販売につなげられます。
 誰でもスムーズに販路を広げ、ブランドの魅力を最大限に発信できる環境を提供します。
@@ -17,28 +17,57 @@ SNSと直結して5分でオンラインショップを開設できるECプラ�
 - 注文・配送情報の管理
 
 ## バージョン情報
-このリポジトリのバージョン情報です。
 - TypeScript 5.9.3
 - React 19.1.0
 - Next.js 15.5.7
 - Auth.js 5.0.0-beta.30
 - TailwindCSS 4.1.17
 
-こちらは同じプロジェクトのバックエンドのリポジトリです。
-- Ruby 3.3.9
-- Rails 8.0.2.1
-- Postgresql 16.10
-- Docker 28.4.0
+## リソース表
+
+### Pages（Public）
+| Method | Path | 説明 |
+| --- | --- | --- |
+| GET | / | トップ（新着商品/新着ショップ） |
+| GET | /about | Aboutページ |
+| GET | /privacy | プライバシーポリシー |
+| GET | /terms | 利用規約 |
+| GET | /cart | カート |
+| GET | /cart/success | 決済完了ページ |
+| GET | /products/[id] | 商品詳細 |
+| GET | /shops | ショップ一覧 |
+| GET | /shops/[id] | ショップ詳細（商品一覧含む） |
+| GET | /shops/[id]/profile | ショッププロフィール（公開） |
+
+### Pages（Dashboard）
+| Method | Path | 説明 |
+| --- | --- | --- |
+| GET | /dashboard | ダッシュボードTOP（ユーザー注文一覧など） |
+| GET | /dashboard/orders/[id] | 注文詳細（ユーザー） |
+| GET | /dashboard/shop | ショップ管理TOP（受注一覧など） |
+| GET | /dashboard/shop/profile | ショッププロフィール編集 |
+| GET | /dashboard/shop/orders/[id] | 受注詳細（ショップ） |
+| GET | /dashboard/shop/products/new | 商品作成（ショップ） |
+| GET | /dashboard/shop/products/[id]/edit | 商品編集（ショップ） |
+
+### Route Handlers（API/内部処理）
+| Method | Path | 説明 |
+| --- | --- | --- |
+| GET/POST | /api/auth/[...nextauth] | Auth.js（NextAuth）ハンドラ |
+| GET | /api/auth/callback | Auth後にRailsへ /api/login → Cookie(di_data)セット |
+| GET/POST/PUT/PATCH/DELETE | /api/[...proxy] | Rails API へのプロキシ転送（内部API） |
+| POST | /dashboard/setup_shop | 認可後に /api/shop(POST) → /dashboard/shop へリダイレクト |
+| GET | /dashboard/shop/refresh | /api/shop を取り直してCookie反映 → /dashboard/shop |
+
+## 認証フロー
+
+![認証フロー](docs/nextjs_rails_auth_architecture.webp)
 
 ## Setup
 ```
 npm install
 npm run dev
 ```
-
-## 認証フロー
-
-![認証フロー](docs/nextjs_rails_auth_architecture.webp)
 
 ## 環境変数
 
