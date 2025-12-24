@@ -14,8 +14,11 @@ export default async function Header() {
 
   return (
     <div className="bg-black">
-      <div className="w-7xl mx-auto max-w-full flex flex-wrap justify-between items-center gap-y-3 p-4">
-        <Link href="/">
+      <div className="w-7xl mx-auto max-w-full flex flex-col sm:flex-row sm:justify-between items-center gap-y-3 p-4">
+        <Link
+          href="/"
+          className="w-full sm:w-auto flex justify-center sm:justify-start"
+        >
           <div className="flex items-center gap-2">
             <figure className="mt-1.5 w-7 h-7">
               {/* eslint-disable @next/next/no-img-element */}
