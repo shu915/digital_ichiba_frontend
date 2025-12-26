@@ -13,8 +13,8 @@ Digital Ichibaは、ハンドメイド作家や衣料品、雑貨、生活用品
 - マルチテナント対応のショップ管理
 - JWT（Auth.js）によるAPI認証
 - Stripe Checkout / Connectによる決済・分配
-- 商品・在庫管理
-- 注文・配送情報の管理
+- 商品管理
+- 注文情報の管理
 
 ## バージョン情報
 - TypeScript 5.9.3
@@ -53,7 +53,7 @@ Digital Ichibaは、ハンドメイド作家や衣料品、雑貨、生活用品
 ### Route Handlers（API/内部処理）
 | Method | Path | 説明 |
 | --- | --- | --- |
-| GET/POST | /api/auth/[...nextauth] | Auth.js（NextAuth）ハンドラ |
+| GET/POST | /api/auth/[...nextauth] | Auth.jsハンドラ |
 | GET | /api/auth/callback | Auth後にRailsへ /api/login → Cookie(di_data)セット |
 | GET/POST/PUT/PATCH/DELETE | /api/[...proxy] | Rails API へのプロキシ転送（内部API） |
 | POST | /dashboard/setup_shop | 認可後に /api/shop(POST) → /dashboard/shop へリダイレクト |
