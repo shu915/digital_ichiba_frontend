@@ -14,7 +14,11 @@ export default function ShopListItem({
   icon_url?: string | null;
 }) {
   return (
-    <div className="border rounded p-4 hover:bg-muted/40 transition h-full">
+    <Link
+      href={`/shops/${id}`}
+      className="block border rounded p-4 hover:bg-muted/40 transition h-full focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+      aria-label={`${name} のショップ詳細へ`}
+    >
       <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-4">
         <figure className="shrink-0 w-14 h-14 rounded-full overflow-hidden">
           {/* eslint-disable @next/next/no-img-element */}
@@ -36,15 +40,7 @@ export default function ShopListItem({
             </p>
           )}
         </div>
-        <div className="shrink-0 w-full sm:w-auto">
-          <Link
-            href={`/shops/${id}`}
-            className="inline-block w-full sm:w-auto text-center px-3 py-2 rounded bg-black text-white font-bold hover:bg-black/90"
-          >
-            ショップ詳細へ
-          </Link>
-        </div>
       </div>
-    </div>
+    </Link>
   );
 }
