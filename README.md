@@ -97,7 +97,7 @@ AUTH_SECRET=your-random-secret
 # Auth.js（NextAuth）用：このフロントのURL（コールバックURL生成に使用）
 AUTH_URL=http://localhost:3001
 
-# Google OAuth（GCPのOAuthクライアント）
+# Google OAuth
 AUTH_GOOGLE_ID=xxxx.apps.googleusercontent.com
 AUTH_GOOGLE_SECRET=xxxx
 
