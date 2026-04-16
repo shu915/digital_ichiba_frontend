@@ -7,27 +7,24 @@ export default function ProductCard({ product }: { product: ProductType }) {
   return (
     <Link href={`/products/${product.id}`} className="group block">
       {/* Image Container */}
-      <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-neutral-100">
+      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-50">
         {/* eslint-disable @next/next/no-img-element */}
         <img
           src={product.image_url}
           alt={product.name}
-          className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.03]"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           decoding="async"
           referrerPolicy="no-referrer"
         />
-        {/* Subtle overlay on hover */}
-        <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/5" />
       </div>
 
       {/* Product Info */}
-      <div className="mt-4 space-y-1">
-        <h3 className="text-sm tracking-wide text-neutral-800 line-clamp-1 group-hover:text-neutral-600 transition-colors duration-300">
+      <div className="mt-3 px-1">
+        <h3 className="text-[13px] font-medium text-neutral-900 line-clamp-2 leading-tight">
           {product.name}
         </h3>
-        <p className="text-sm text-neutral-500 tabular-nums">
-          {formattedPrice}
-          <span className="ml-1 text-xs">円</span>
+        <p className="mt-1.5 text-[15px] font-semibold text-neutral-900 tabular-nums">
+          ¥{formattedPrice}
         </p>
       </div>
     </Link>
